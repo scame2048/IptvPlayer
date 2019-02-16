@@ -1,0 +1,3 @@
+// one line one module
+
+include ':IptvPlayer'

@@ -1,0 +1,44 @@
+{
+    "name": "杂项直播",
+    "list": [
+        {
+            "category": "杂项 1",
+            "list": [
+                {
+                    "channel": "清华大学电视台",
+                    "definition": 0,
+                    "enable": 1,
+                    "address": "http://v.cic.tsinghua.edu.cn:8080/live/tsinghuatv.flv"
+                }
+            ]
+        },
+        {
+            "category": "新华社",
+            "list": [
+                {
+                    "channel": "新华社中文台",
+                    "definition": 0,
+                    "enable": 1,
+                    "address": "http://live.xinhuashixun.com/live/chn01/desc.m3u8"
+                }
+            ]
+        },
+        {
+            "category": "美国中文",
+            "list": [
+                {
+                    "channel": "美国中文电视",
+                    "definition": 0,
+                    "enable": 1,
+                    "address": "http://media3.sinovision.net:1935/live/livestream/playlist.m3u8"
+                },
+                {
+                    "channel": "美国中文",
+                    "definition": 0,
+                    "enable": 0,
+                    "address": "http://media3.sinovision.net:1935/live/livestream/playlist.m3u8"
+                }
+            ]
+        }
+    ]
+}
