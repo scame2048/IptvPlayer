@@ -1,0 +1,458 @@
+{
+  "name": "江苏移动 001 号源",
+  "version": 1,
+  "list": [
+    {
+      "category": "央视台",
+      "list": [
+        {
+          "channel": "CCTV 1",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225530/index.m3u8"
+        },
+        {
+          "channel": "CCTV 1",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221226316/index.m3u8"
+        },
+        {
+          "channel": "CCTV 3",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225588/index.m3u8"
+        },
+        {
+          "channel": "CCTV 4",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225534/index.m3u8"
+        },
+        {
+          "channel": "CCTV 5",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225604/index.m3u8"
+        },
+        {
+          "channel": "CCTV 5",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221226324/index.m3u8"
+        },
+        {
+          "channel": "CCTV 5+",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221226322/index.m3u8"
+        },
+        {
+          "channel": "CCTV 6",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225548/index.m3u8"
+        },
+        {
+          "channel": "CCTV 7",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225546/index.m3u8"
+        },
+        {
+          "channel": "CCTV 9",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225532/index.m3u8"
+        },
+        {
+          "channel": "CCTV 10",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225550/index.m3u8"
+        },
+        {
+          "channel": "CCTV 11",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225552/index.m3u8"
+        },
+        {
+          "channel": "CCTV 12",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225556/index.m3u8"
+        },
+        {
+          "channel": "CCTV 13",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225560/index.m3u8"
+        },
+        {
+          "channel": "CCTV 15",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225568/index.m3u8"
+        }
+      ]
+    },
+    {
+      "category": "卫视台",
+      "list": [
+        {
+          "channel": "新疆卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225523/index.m3u8"
+        },
+        {
+          "channel": "江西卫视",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225536/index.m3u8"
+        },
+        {
+          "channel": "贵州卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225540/index.m3u8"
+        },
+        {
+          "channel": "广西卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225554/index.m3u8"
+        },
+        {
+          "channel": "浙江卫视",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225544/index.m3u8"
+        },
+        {
+          "channel": "东方卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225558/index.m3u8"
+        },
+        {
+          "channel": "天津卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225562/index.m3u8"
+        },
+        {
+          "channel": "辽宁卫视",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225566/index.m3u8"
+        },
+        {
+          "channel": "四川卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225570/index.m3u8"
+        },
+        {
+          "channel": "CGTN",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225572/index.m3u8"
+        },
+        {
+          "channel": "北京卫视",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225574/index.m3u8"
+        },
+        {
+          "channel": "山西卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225576/index.m3u8"
+        },
+        {
+          "channel": "广东卫视",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225578/index.m3u8"
+        },
+        {
+          "channel": "广东卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225592/index.m3u8"
+        },
+        {
+          "channel": "西藏卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225579/index.m3u8"
+        },
+        {
+          "channel": "青海卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225580/index.m3u8"
+        },
+        {
+          "channel": "深圳卫视",
+          "definition": 1,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225582/index.m3u8"
+        },
+        {
+          "channel": "山东卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225586/index.m3u8"
+        },
+        {
+          "channel": "甘肃卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225590/index.m3u8"
+        },
+        {
+          "channel": "甘肃卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225591/index.m3u8"
+        },
+        {
+          "channel": "重庆卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225594/index.m3u8"
+        },
+        {
+          "channel": "东南卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225598/index.m3u8"
+        },
+        {
+          "channel": "河北卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225602/index.m3u8"
+        },
+        {
+          "channel": "内蒙古卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225624/index.m3u8"
+        },
+        {
+          "channel": "陕西卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225626/index.m3u8"
+        },
+        {
+          "channel": "宁夏卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225628/index.m3u8"
+        },
+        {
+          "channel": "湖北卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225630/index.m3u8"
+        },
+        {
+          "channel": "河南卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225632/index.m3u8"
+        },
+        {
+          "channel": "安徽卫视",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225634/index.m3u8"
+        },
+        {
+          "channel": "炫动卡通",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225694/index.m3u8"
+        }
+      ]
+    },
+    {
+      "category": "徐州地方台",
+      "list": [
+        {
+          "channel": "徐州1",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225945/index.m3u8"
+        },
+        {
+          "channel": "徐州2",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225947/index.m3u8"
+        },
+        {
+          "channel": "徐州3",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225949/index.m3u8"
+        },
+        {
+          "channel": "徐州4",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225951/index.m3u8"
+        }
+      ]
+    },
+    {
+      "category": "其他台",
+      "list": [
+        {
+          "channel": "Newtv爱情喜剧",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225525/index.m3u8"
+        },
+        {
+          "channel": "Newtv古装剧场",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225527/index.m3u8"
+        },
+        {
+          "channel": "Newtv动作电影",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225529/index.m3u8"
+        },
+        {
+          "channel": "Newtv军旅剧场",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225531/index.m3u8"
+        },
+        {
+          "channel": "Newtv军事评论",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225533/index.m3u8"
+        },
+        {
+          "channel": "Newtv明星大片",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225535/index.m3u8"
+        },
+        {
+          "channel": "Newtv农业致富",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225537/index.m3u8"
+        },
+        {
+          "channel": "Newtv完美游戏",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225539/index.m3u8"
+        },
+        {
+          "channel": "Newtv精品体育",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225543/index.m3u8"
+        },
+        {
+          "channel": "Newtv健康有约",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225545/index.m3u8"
+        },
+        {
+          "channel": "Newtv海外剧场",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225547/index.m3u8"
+        },
+        {
+          "channel": "Newtv家庭剧场",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225549/index.m3u8"
+        },
+        {
+          "channel": "Newtv动画王国",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225555/index.m3u8"
+        },
+        {
+          "channel": "Newtv精品纪录",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225557/index.m3u8"
+        },
+        {
+          "channel": "Newtv精品纪录",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225557/index.m3u8"
+        },
+        {
+          "channel": "Newtv金牌综艺",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225559/index.m3u8"
+        },
+        {
+          "channel": "Newtv惊悚悬疑",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225561/index.m3u8"
+        },
+        {
+          "channel": "Newtv精品电影",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225567/index.m3u8"
+        },
+        {
+          "channel": "Newtv精品大剧",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225569/index.m3u8"
+        },
+        {
+          "channel": "SDETV",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225614/index.m3u8"
+        },
+        {
+          "channel": "卡酷少儿",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225616/index.m3u8"
+        },
+        {
+          "channel": "金鹰卡通",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225620/index.m3u8"
+        },
+        {
+          "channel": "CETV1",
+          "definition": 0,
+          "enable": 1,
+          "address": "http://223.110.243.155:80/PLTV/3/224/3221225622/index.m3u8"
+        }
+      ]
+    }
+  ]
+}
