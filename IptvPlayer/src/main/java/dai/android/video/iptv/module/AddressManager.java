@@ -1,5 +1,6 @@
 package dai.android.video.iptv.module;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ import dai.android.video.iptv.data.Source;
 import dai.android.video.iptv.data.UrlBox;
 import dai.android.video.iptv.network.IHttpCallBack;
 import dai.android.video.iptv.network.UrlFetcher;
+import dai.android.video.iptv.utility.Assets;
 import dai.android.video.iptv.utility.Logger;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -22,10 +24,36 @@ import okhttp3.ResponseBody;
 public final class AddressManager {
     private static final String TAG = AddressManager.class.getSimpleName();
 
+    private static AddressManager sAddressManager = null;
+
+    public static AddressManager get(Context context) {
+        if (null == sAddressManager) {
+            synchronized (AddressManager.class) {
+                if (null == sAddressManager) {
+                    sAddressManager = new AddressManager(context);
+                }
+            }
+        }
+        return sAddressManager;
+    }
+
+    public static AddressManager get() {
+        if (null == sAddressManager) {
+            throw new RuntimeException("Call function AddressManager get(Context) first");
+        }
+        synchronized (AddressManager.class) {
+            return sAddressManager;
+        }
+    }
+
+
     private final Map<String, List<Source>> mSources = new HashMap<>();
 
-    public AddressManager() {
+    private final Context mContext;
+
+    private AddressManager(Context context) {
         mSources.clear();
+        mContext = context;
     }
 
 
@@ -54,40 +82,65 @@ public final class AddressManager {
                 continue;
             }
 
-            for (UrlBox.Url url : values) {
-                String strUrl = UrlBox.BASE_URL + url.path;
+            for (final UrlBox.Url u : values) {
+                String strUrl = UrlBox.BASE_URL + u.path;
 
                 UrlFetcher fetcher = new UrlFetcher();
                 fetcher.doRequest(strUrl, new IHttpCallBack() {
                     @Override
                     public void onSuccess(String url, Response response) {
+                        boolean useDefault = false;
                         if (null == response || !response.isSuccessful()) {
                             Logger.e(TAG, "bad response from: " + url);
-                            return;
+                            useDefault = true;
                         }
 
-                        ResponseBody body = response.body();
-                        if (null == body) {
-                            Logger.e(TAG, "null response body");
-                            return;
+                        ResponseBody body = null;
+                        if (!useDefault) {
+                            body = response.body();
+                            if (null == body) {
+                                Logger.e(TAG, "null response body");
+                                useDefault = true;
+                                return;
+                            }
                         }
 
-                        try {
-                            String strBody = body.string();
-                            convert(strKey, strBody);
-                        } catch (IOException e) {
-                            Logger.e(TAG, "some error:", e);
+                        if (!useDefault) {
+                            try {
+                                String strBody = body.string();
+                                convert(strKey, strBody);
+                            } catch (IOException e) {
+                                Logger.e(TAG, "some error:", e);
+                                useDefault = true;
+                            }
+                        }
+
+                        if (useDefault) {
+                            Logger.w(TAG, "user default data at asset/" + u.path);
+                            readRawFromAsset(strKey, u);
                         }
                     }
 
                     @Override
                     public void onFailed(String url, Exception e) {
                         Logger.e(TAG, "request error from: " + url, e);
+                        Logger.w(TAG, "user default data at asset/" + u.path);
+                        readRawFromAsset(strKey, u);
                     }
                 });
 
             }
         }
+    }
+
+    private void readRawFromAsset(String from, UrlBox.Url url) {
+        if (TextUtils.isEmpty(from))
+            return;
+        if (url == null)
+            return;
+
+        String raw = Assets.readFromAssets(mContext.getAssets(), url.path);
+        convert(from, raw);
     }
 
     private void convert(String from, String raw) {

@@ -10,8 +10,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        AddressManager addressManager = new AddressManager();
-        addressManager.fetch();
+        AddressManager.get(getApplicationContext()).fetch();
     }
 
     @Override
