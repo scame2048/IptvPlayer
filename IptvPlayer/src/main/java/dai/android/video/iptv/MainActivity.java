@@ -100,6 +100,12 @@ public class MainActivity extends Activity {
             Logger.v(TAG, "onPrepared");
             LivePlayerManager.get().start();
         }
+
+        @Override
+        public boolean onInfo(IMediaPlayer player, int what, int extra) {
+            Logger.d(TAG, "[onInfo( " + what + ", " + extra + " )]");
+            return true;
+        }
     };
 
     private SurfaceHolder.Callback mCallBack = new SurfaceHolder.Callback() {
