@@ -61,14 +61,11 @@ public final class LivePlayerManager implements IPlayMonitor {
         }
     }
 
-
-    public void setDataSource(@NonNull String url) {
-        Logger.v(TAG, "[setDataSource]");
-
-        setDataSource(url, PLAYER_IJK);
+    public void createMedia() {
+        createMedia(PLAYER_IJK);
     }
 
-    public void setDataSource(@NonNull String url, int type) {
+    public void createMedia(int type) {
         switch (type) {
             case PLAYER_SYS:
             case PLAYER_IJK: {
@@ -81,7 +78,9 @@ public final class LivePlayerManager implements IPlayMonitor {
             }
         }
         makeMediaPlayer();
+    }
 
+    public void setDataSource(@NonNull String url) {
         try {
             mMediaPlayer.setDataSource(url);
         } catch (Exception e) {

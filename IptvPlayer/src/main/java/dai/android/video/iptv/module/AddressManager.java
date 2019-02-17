@@ -1,6 +1,8 @@
 package dai.android.video.iptv.module;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -52,9 +54,35 @@ public final class AddressManager {
 
     private final Context mContext;
 
+    private final HandlerThread mWorkThread;
+    private final Handler H;
+
+    private ILoader mLoader;
+
     private AddressManager(Context context) {
         mSources.clear();
         mContext = context;
+
+        mWorkThread = new HandlerThread(TAG);
+        mWorkThread.start();
+
+        H = new Handler(mWorkThread.getLooper());
+    }
+
+    public void post(Runnable runnable) {
+        H.post(runnable);
+    }
+
+    public void postDelayed(Runnable r, long delayMillis) {
+        H.postDelayed(r, delayMillis);
+    }
+
+    public void postTerminal() {
+        mWorkThread.quitSafely();
+    }
+
+    public void setLoader(ILoader loader) {
+        mLoader = loader;
     }
 
     public Set<String> getFrom() {
@@ -63,6 +91,14 @@ public final class AddressManager {
 
     public List<Source> getSources(String key) {
         return mSources.get(key);
+    }
+
+    private void handleLoader() {
+        if (null != mLoader) {
+            if (mSources.size() == 4) {
+                mLoader.onAddressLoader();
+            }
+        }
     }
 
     public void fetch() {
@@ -127,6 +163,8 @@ public final class AddressManager {
                             Logger.w(TAG, "user default data at asset/" + u.path);
                             readRawFromAsset(strKey, u);
                         }
+
+                        handleLoader();
                     }
 
                     @Override

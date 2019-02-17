@@ -2,8 +2,8 @@ package dai.android.video.iptv;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import java.util.List;
 
@@ -12,36 +12,27 @@ import dai.android.video.iptv.data.Category;
 import dai.android.video.iptv.data.Source;
 import dai.android.video.iptv.data.UrlBox;
 import dai.android.video.iptv.module.AddressManager;
+import dai.android.video.iptv.module.ILoader;
+import dai.android.video.iptv.player.AbstractPlayMonitor;
+import dai.android.video.iptv.player.LivePlayerManager;
 import dai.android.video.iptv.utility.Logger;
-import dai.android.video.iptv.widget.LiveVideoView;
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 public class MainActivity extends Activity {
     private static final String TAG = "ActivityMain";
 
-    private LiveVideoView mVideoView;
-
-    private HandlerThread mWorkThread;
-    private Handler H;
+    private SurfaceView mVideoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mWorkThread = new HandlerThread(TAG);
-        mWorkThread.start();
-        H = new Handler(mWorkThread.getLooper());
-
         setContentView(R.layout.activity_main);
         mVideoView = findViewById(R.id.videoView);
+        mVideoView.getHolder().addCallback(mCallBack);
 
-
-        H.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // now let's set data source
-                setDefaultDataSource();
-            }
-        }, 8000);
+        LivePlayerManager.get().createMedia();
+        AddressManager.get().setLoader(mLoader);
     }
 
     private void setDefaultDataSource() {
@@ -55,7 +46,9 @@ public class MainActivity extends Activity {
                 Logger.v(TAG, "category: " + category.getCategory());
                 Address address = category.getAddress().get(0);
                 Logger.d(TAG, "play address: " + address.getAddress());
-                mVideoView.setDataSource(address.getAddress());
+                LivePlayerManager.get().setDataSource(address.getAddress());
+                LivePlayerManager.get().add(mPlayerMonitor);
+                LivePlayerManager.get().prepareAsync();
             }
         }
     }
@@ -64,19 +57,66 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
 
-        if (null != mVideoView) {
-            mVideoView.pause();
-        }
+        LivePlayerManager.get().pause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        if (null != mVideoView) {
-            mVideoView.release();
-        }
+        LivePlayerManager.get().release();
     }
+
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // private function and filed
+
+    private ILoader mLoader = new ILoader() {
+        @Override
+        public void onAddressLoader() {
+            setDefaultDataSource();
+        }
+    };
+
+    private AbstractPlayMonitor mPlayerMonitor = new AbstractPlayMonitor() {
+        @Override
+        public void onBufferingUpdate(IMediaPlayer player, int i) {
+            //Logger.d(TAG, "onBufferingUpdate: " + i);
+        }
+
+        @Override
+        public void onCompletion(IMediaPlayer player) {
+            Logger.d(TAG, "[onCompletion]");
+        }
+
+        @Override
+        public boolean onError(IMediaPlayer player, int what, int extra) {
+            Logger.d(TAG, "[onError( " + what + ", " + extra + " )]");
+            return true;
+        }
+
+        @Override
+        public void onPrepared(IMediaPlayer player) {
+            Logger.v(TAG, "onPrepared");
+            LivePlayerManager.get().start();
+        }
+    };
+
+    private SurfaceHolder.Callback mCallBack = new SurfaceHolder.Callback() {
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            Logger.v(TAG, "surface created");
+            LivePlayerManager.get().setDisplay(holder);
+        }
+
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        }
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+        }
+    };
 
 
 }
