@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import dai.android.video.iptv.data.Source;
 import dai.android.video.iptv.data.UrlBox;
@@ -56,6 +57,13 @@ public final class AddressManager {
         mContext = context;
     }
 
+    public Set<String> getFrom() {
+        return mSources.keySet();
+    }
+
+    public List<Source> getSources(String key) {
+        return mSources.get(key);
+    }
 
     public void fetch() {
         if (!mSources.isEmpty()) {

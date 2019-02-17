@@ -11,7 +11,7 @@ public final class Category {
         return category;
     }
 
-    public List<Address> getList() {
+    public List<Address> getAddress() {
         return list;
     }
 }

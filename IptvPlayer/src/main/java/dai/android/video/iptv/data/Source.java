@@ -16,7 +16,7 @@ public class Source {
         return version;
     }
 
-    public List<Category> getList() {
+    public List<Category> getCategories() {
         return list;
     }
 
