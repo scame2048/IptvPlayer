@@ -164,17 +164,56 @@ public final class LivePlayerManager implements IPlayMonitor {
             }
             IjkMediaPlayer ijkMediaPlayer = new IjkMediaPlayer();
 
+            // 相关的配置设置 https://www.jianshu.com/p/843c86a9e9ad
+
             // 如下配置可以秒开
             // https://blog.csdn.net/u014614038/article/details/78350324
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "analyzemaxduration", 100L);
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 10240L);
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "flush_packets", 1L);
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0L);
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 1L);
 
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "fps", 30);
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 1);
-            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
+            ijkMediaPlayer.setOption(1, "analyzemaxduration", 100L);
+            ijkMediaPlayer.setOption(1, "probesize", 10240L);
+            ijkMediaPlayer.setOption(1, "flush_packets", 1L);
+            ijkMediaPlayer.setOption(4, "packet-buffering", 0L);
+            ijkMediaPlayer.setOption(4, "framedrop", 1L);
+
+
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 1);
+
+            // 设置是否开启环路过滤: 0开启，画面质量高，解码开销大，48关闭，画面质量差点，解码开销小
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
+
+            // 播放重连次数
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "reconnect", 10);
+
+            // 设置是否开启变调
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "soundtouch", 1);
+
+            // 设置播放前的最大探测时间
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "analyzemaxduration", 100L);
+
+            // 设置播放前的探测时间 1, 达到首屏秒开效果
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "analyzeduration", 1);
+
+            // 播放前的探测Size，默认是1M, 改小一点会出画面更快
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 4096L);
+
+            // 每处理一个packet之后刷新io上下文
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "flush_packets", 1L);
+
+            // 是否开启预缓冲，一般直播项目会开启，达到秒开的效果，不过带来了播放丢帧卡顿的体验
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 1L); // 建议为 0L
+
+            // 最大缓冲大小,单位kb
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "max-buffer-size", 4096);
+
+            // 跳帧处理,放CPU处理较慢时，进行跳帧处理，保证播放流程，画面和声音同步
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 5);
+
+            // 最大fps
+            ///ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "fps", 30);
+
+            // 某些视频在SeekTo的时候，会跳回到拖动前的位置，这是因为视频的关键帧的问题，通俗一点就是FFMPEG不兼容
+            // 视频压缩过于厉害，seek只支持关键帧，出现这个情况就是原始的视频文件中 i 帧比较少
+            // ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1);
 
 
             // 另外一种配置方式
