@@ -43,8 +43,10 @@ public class MainActivity extends Activity {
             List<Category> categories = item.getCategories();
             if (null != categories && !categories.isEmpty()) {
                 Category category = categories.get(2);
+                // Category category = categories.get(1);
                 Logger.v(TAG, "category: " + category.getCategory());
                 Address address = category.getAddress().get(7);
+                // Address address = category.getAddress().get(3);
                 Logger.d(TAG, "play address: " + address.getAddress());
                 LivePlayerManager.get().setDataSource(address.getAddress());
                 LivePlayerManager.get().add(mPlayerMonitor);
