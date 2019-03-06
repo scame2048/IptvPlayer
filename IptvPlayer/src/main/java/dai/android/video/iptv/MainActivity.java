@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
 
     private void setDefaultDataSource() {
         List<Source> sources = AddressManager.get().getSources(UrlBox.STR_TELECOM);
+        // List<Source> sources = AddressManager.get().getSources(UrlBox.STR_MISC);
         if (null != sources && !sources.isEmpty()) {
             Source item = sources.get(0);
 
