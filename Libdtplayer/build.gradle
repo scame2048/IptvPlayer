@@ -1,0 +1,56 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+
+        versionCode 1
+        versionName "1.0"
+
+        externalNativeBuild {
+            cmake {
+                // cppFlags "-frtti -fexceptions -DANDROID"
+                cFlags "-DENABLE_ANDROID=1 " +
+                        "-DENABLE_FFMPEG=1 " +
+                        "-DENABLE_STREAM_FFMPEG=1 " +
+                        "-DENABLE_DEMUXER_FFMPEG=1 " +
+                        "-DENABLE_VDEC_FFMPEG=1 " +
+                        "-DENABLE_SDEC_FFMPEG=1 " +
+                        "-DENABLE_VF_FFMPEG=1 " +
+                        "-DENABLE_ADEC_FFMPEG=1 "
+            }
+        }
+
+        ndk {
+            // abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // abiFilters 'armeabi-v7a', 'arm64-v8a'
+            abiFilters 'arm64-v8a'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+}
