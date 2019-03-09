@@ -7,6 +7,7 @@ import android.view.SurfaceView;
 
 import java.util.List;
 
+import dai.android.media.dt.MediaPlayer;
 import dai.android.video.iptv.data.Address;
 import dai.android.video.iptv.data.Category;
 import dai.android.video.iptv.data.Source;
@@ -23,6 +24,9 @@ public class MainActivity extends Activity {
 
     private SurfaceView mVideoView;
 
+    MediaPlayer mDtPlayer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +35,11 @@ public class MainActivity extends Activity {
         mVideoView = findViewById(R.id.videoView);
         mVideoView.getHolder().addCallback(mCallBack);
 
-        LivePlayerManager.get().createMedia();
+        // LivePlayerManager.get().createMedia();
         AddressManager.get().setLoader(mLoader);
+
+        mDtPlayer = new MediaPlayer(this, true);
+        mDtPlayer.setOnPreparedListener(mOnPreparedListener);
     }
 
     private void setDefaultDataSource() {
@@ -49,12 +56,29 @@ public class MainActivity extends Activity {
                 Address address = category.getAddress().get(7);
                 // Address address = category.getAddress().get(3);
                 Logger.d(TAG, "play address: " + address.getAddress());
-                LivePlayerManager.get().setDataSource(address.getAddress());
-                LivePlayerManager.get().add(mPlayerMonitor);
-                LivePlayerManager.get().prepareAsync();
+                //LivePlayerManager.get().setDataSource(address.getAddress());
+                //LivePlayerManager.get().add(mPlayerMonitor);
+                //LivePlayerManager.get().prepareAsync();
+
+                try {
+                    mDtPlayer.setDataSource(address.getAddress());
+                    mDtPlayer.setDisplay(mVideoView.getHolder());
+                    mDtPlayer.prepare();
+                    mDtPlayer.start();
+                } catch (Exception e) {
+                }
+
+
             }
         }
     }
+
+    private MediaPlayer.OnPreparedListener mOnPreparedListener = new MediaPlayer.OnPreparedListener() {
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+
+        }
+    };
 
     @Override
     protected void onPause() {
