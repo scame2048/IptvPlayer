@@ -18,6 +18,7 @@
 
 #if ENABLE_FFMPEG
 #include "libavutil/dict.h"
+#include "libavutil/mem.h"
 static AVDictionary *av_options;
 #endif
 

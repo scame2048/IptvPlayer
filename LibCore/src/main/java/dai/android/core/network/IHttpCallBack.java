@@ -1,4 +1,4 @@
-package dai.android.video.iptv.network;
+package dai.android.core.network;
 
 import okhttp3.Response;
 

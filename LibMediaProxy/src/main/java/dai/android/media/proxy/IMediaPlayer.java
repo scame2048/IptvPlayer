@@ -57,4 +57,6 @@ public interface IMediaPlayer {
     void setVolume(float leftVolume, float rightVolume);
 
     int getAudioSessionId();
+
+    void setPlayCallBack(IPlayCallBack callBack);
 }

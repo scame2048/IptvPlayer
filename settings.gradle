@@ -2,5 +2,8 @@
 // one line one module
 //
 
-include ':IptvPlayer', ':LibMediaProxy'
+include ':LibCore'
 include ':LibDtplayer'
+include ':LibMediaProxy'
+
+include ':IptvPlayer'

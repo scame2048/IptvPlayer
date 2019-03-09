@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import dai.android.core.log.Logger;
+import dai.android.core.network.IHttpCallBack;
+import dai.android.core.network.UrlFetcher;
+import dai.android.core.utility.Assets;
 import dai.android.video.iptv.data.Source;
 import dai.android.video.iptv.data.UrlBox;
-import dai.android.video.iptv.network.IHttpCallBack;
-import dai.android.video.iptv.network.UrlFetcher;
-import dai.android.video.iptv.utility.Assets;
-import dai.android.video.iptv.utility.Logger;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 

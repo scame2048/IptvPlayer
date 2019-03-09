@@ -101,21 +101,25 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
     @Override
     public void prepareAsync() throws IllegalStateException {
         mInternalMediaPlayer.prepareAsync();
+        notifyOnPrepare();
     }
 
     @Override
     public void start() throws IllegalStateException {
         mInternalMediaPlayer.start();
+        notifyOnStart();
     }
 
     @Override
     public void stop() throws IllegalStateException {
         mInternalMediaPlayer.stop();
+        notifyOnStop();
     }
 
     @Override
     public void pause() throws IllegalStateException {
         mInternalMediaPlayer.pause();
+        notifyOnPause();
     }
 
     @Override
@@ -140,6 +144,7 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
     @Override
     public void seekTo(long msec) throws IllegalStateException {
         mInternalMediaPlayer.seekTo((int) msec);
+        notifyOnSeek();
     }
 
     @Override
@@ -166,6 +171,9 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
         mInternalMediaPlayer.release();
         resetListener();
         attachInternalListeners();
+
+        removeHandle();
+        notifyOnRelease();
     }
 
     @Override
@@ -176,6 +184,8 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
         }
         resetListener();
         attachInternalListeners();
+
+        notifyOnReset();
     }
 
     @Override

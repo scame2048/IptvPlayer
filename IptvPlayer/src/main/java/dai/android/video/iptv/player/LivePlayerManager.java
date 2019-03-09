@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import dai.android.core.log.Logger;
 import dai.android.video.iptv.run.WorkManager;
-import dai.android.video.iptv.utility.Logger;
 import tv.danmaku.ijk.media.player.AbstractMediaPlayer;
 import tv.danmaku.ijk.media.player.AndroidMediaPlayer;
 import tv.danmaku.ijk.media.player.IMediaPlayer;

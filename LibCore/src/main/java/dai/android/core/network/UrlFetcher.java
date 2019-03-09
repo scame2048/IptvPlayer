@@ -1,4 +1,4 @@
-package dai.android.video.iptv.network;
+package dai.android.core.network;
 
 import android.text.TextUtils;
 
@@ -17,7 +17,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import dai.android.video.iptv.utility.Logger;
+import dai.android.core.log.Logger;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;

@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
 
         applicationId "dai.android.video.iptv"
 
@@ -37,14 +37,11 @@ dependencies {
     implementation fileTree(include: ['*.aar'], dir: 'libs')
 
     implementation 'com.android.support:support-annotations:28.0.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    implementation 'com.squareup.okio:okio:1.14.0'
 
-    //implementation 'com.alibaba:fastjson:1.1.70.android'
-    implementation 'com.google.code.gson:gson:2.8.5'
 
     //implementation 'com.android.support:appcompat-v7:28.0.0'
     //implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     implementation project(':LibDtplayer')
+    implementation project(':LibCore')
 }

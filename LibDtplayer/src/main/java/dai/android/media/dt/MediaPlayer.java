@@ -202,7 +202,8 @@ public class MediaPlayer {
      *                               first open the file for reading, and then use the file descriptor
      *                               form {@link #setDataSource(FileDescriptor)}.
      */
-    public void setDataSource(String path) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+    public void setDataSource(String path) throws
+            IOException, IllegalArgumentException, SecurityException, IllegalStateException {
         native_set_datasource(path, null, null);
     }
 
@@ -213,11 +214,13 @@ public class MediaPlayer {
      * @param uri     the Content URI of the data you want to play
      * @throws IllegalStateException if it is called in an invalid state
      */
-    public void setDataSource(Context context, Uri uri) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+    public void setDataSource(Context context, Uri uri) throws
+            IOException, IllegalArgumentException, SecurityException, IllegalStateException {
         setDataSource(context, uri, null);
     }
 
-    public void setDataSource(Context context, Uri uri, Map<String, String> headers) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+    public void setDataSource(Context context, Uri uri, Map<String, String> headers) throws
+            IOException, IllegalArgumentException, SecurityException, IllegalStateException {
         if (context == null || uri == null)
             throw new IllegalArgumentException();
         String scheme = uri.getScheme();
@@ -246,7 +249,8 @@ public class MediaPlayer {
      * @param headers the headers associated with the http request for the stream you want to play
      * @throws IllegalStateException if it is called in an invalid state
      */
-    public void setDataSource(String path, Map<String, String> headers) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+    public void setDataSource(String path, Map<String, String> headers) throws
+            IOException, IllegalArgumentException, SecurityException, IllegalStateException {
         String values[] = null;
         String keys[] = null;
         if (headers != null) {
@@ -270,7 +274,8 @@ public class MediaPlayer {
      * @param values AVOption value
      * @throws IllegalStateException if it is called in an invalid state
      */
-    public void setDataSource(String path, String[] keys, String[] values) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException {
+    public void setDataSource(String path, String[] keys, String[] values) throws
+            IOException, IllegalArgumentException, SecurityException, IllegalStateException {
         final Uri uri = Uri.parse(path);
         if ("file".equals(uri.getScheme())) {
             path = uri.getPath();
@@ -497,7 +502,6 @@ public class MediaPlayer {
      * to provide a notification when the width is available.
      */
     public int getVideoWidth() {
-
         return native_get_video_width();
     }
 
@@ -513,7 +517,6 @@ public class MediaPlayer {
      * to provide a notification when the height is available.
      */
     public int getVideoHeight() {
-
         return native_get_video_height();
     }
 
@@ -525,7 +528,7 @@ public class MediaPlayer {
      * @return true if currently playing, false otherwise
      */
     public boolean isPlaying() {
-        return (native_is_playing() == 1) ? true : false;
+        return native_is_playing() == 1;
     }
 
     /**
@@ -594,11 +597,11 @@ public class MediaPlayer {
         native_stop();
         native_release();
         closeFD();
-        removeListenners();
+        removeListeners();
         mEventHandler = null;
     }
 
-    private void removeListenners() {
+    private void removeListeners() {
         mOnPreparedListener = null;
         mOnFreshVideo = null;
         mOnBufferingUpdateListener = null;

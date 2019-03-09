@@ -10,7 +10,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import dai.android.video.iptv.utility.Logger;
+import dai.android.core.log.Logger;
+
 
 public class RtcpSocket {
     private final static String TAG = RtcpSocket.class.getSimpleName();

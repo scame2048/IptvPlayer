@@ -17,9 +17,10 @@ import java.util.concurrent.Semaphore;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import dai.android.core.log.Logger;
 import dai.android.video.iptv.client.socket.RtpSocket;
 import dai.android.video.iptv.client.video.H264Stream;
-import dai.android.video.iptv.utility.Logger;
+
 
 public class RtspClient {
     private final static String TAG = RtspClient.class.getSimpleName();

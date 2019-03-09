@@ -1,9 +1,8 @@
-package dai.android.video.iptv.utility;
+package dai.android.core.log;
 
 import android.util.Log;
 
-public abstract class Logger {
-
+public final class Logger {
     public static void v(String tag, String message, Throwable tr) {
         Log.v(tag, message, tr);
     }
@@ -43,5 +42,4 @@ public abstract class Logger {
     public static void e(String tag, String message) {
         e(tag, message, null);
     }
-
 }

@@ -70,7 +70,7 @@ int DTPlayer::setGLContext(void *p)
 
 int DTPlayer::setListenner(dttvListenner *listenner)
 {
-    LOGV("[%u:%p] [%u:%p]", sizeof(mListenner), this->mListenner, sizeof(listenner), listenner);
+    LOGV("[%lu:%p] [%lu:%p]", sizeof(mListenner), this->mListenner, sizeof(listenner), listenner);
     this->mListenner = listenner;
     return 0;
 }
@@ -227,7 +227,7 @@ int DTPlayer::setDataSource(const char *file_name)
     memcpy(&media_info, &info, sizeof(dtp_media_info_t));
     mDuration = info.duration;
     mDtpHandle = handle;
-    LOGV("Get Media Info Ok,filesize:%lld fulltime:%lld S \n", info.file_size, info.duration);
+    LOGV("Get Media Info Ok,filesize:%ld fulltime:%ld S \n", info.file_size, info.duration);
 
     status = PLAYER_INITED;
     return 0;
@@ -663,7 +663,7 @@ int DTPlayer::notify(void *cookie, dtp_state_t *state)
     }
 
     LOGV("UPDATECB CURSTATUS:%x status:%d \n", state->cur_status, dtp->status);
-    LOGV("CUR TIME %lld S  FULL TIME:%lld  \n", state->cur_time, state->full_time);
+    LOGV("CUR TIME %ld S  FULL TIME:%ld  \n", state->cur_time, state->full_time);
 END:
     unlock(&dtp->dtp_mutex);
     return ret;

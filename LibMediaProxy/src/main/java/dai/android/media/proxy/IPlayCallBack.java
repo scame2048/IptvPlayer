@@ -28,4 +28,7 @@ public interface IPlayCallBack {
                             int width, int height,
                             int sar_num, int sar_den);
 
+    void onReset();
+
+    void onRelease();
 }

@@ -7,6 +7,7 @@ import android.view.SurfaceView;
 
 import java.util.List;
 
+import dai.android.core.log.Logger;
 import dai.android.media.dt.MediaPlayer;
 import dai.android.video.iptv.data.Address;
 import dai.android.video.iptv.data.Category;
@@ -16,7 +17,7 @@ import dai.android.video.iptv.module.AddressManager;
 import dai.android.video.iptv.module.ILoader;
 import dai.android.video.iptv.player.AbstractPlayMonitor;
 import dai.android.video.iptv.player.LivePlayerManager;
-import dai.android.video.iptv.utility.Logger;
+
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 public class MainActivity extends Activity {

@@ -5,7 +5,7 @@ import android.os.HandlerThread;
 
 import java.util.concurrent.LinkedBlockingDeque;
 
-import dai.android.video.iptv.utility.Logger;
+import dai.android.core.log.Logger;
 
 public abstract class RtpStream {
     private final static String TAG = RtpStream.class.getSimpleName();

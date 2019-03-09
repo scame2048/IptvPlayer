@@ -14,8 +14,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import dai.android.core.log.Logger;
 import dai.android.video.iptv.client.RtspClient;
-import dai.android.video.iptv.utility.Logger;
+
 
 public class H264Stream extends VideoStream {
     private final static String tag = "H24Stream";

@@ -9,8 +9,9 @@ import java.net.DatagramSocket;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingDeque;
 
+import dai.android.core.log.Logger;
 import dai.android.video.iptv.client.stream.RtpStream;
-import dai.android.video.iptv.utility.Logger;
+
 
 public class RtpSocket implements Runnable {
     private final static String TAG = RtpSocket.class.getSimpleName();
