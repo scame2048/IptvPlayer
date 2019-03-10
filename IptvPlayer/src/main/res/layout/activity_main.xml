@@ -6,7 +6,7 @@
     android:keepScreenOn="true">
 
     <SurfaceView
-        android:id="@+id/videoView"
+        android:id="@+id/displaySurface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

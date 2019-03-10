@@ -8,24 +8,24 @@ import android.view.SurfaceView;
 import java.util.List;
 
 import dai.android.core.log.Logger;
-import dai.android.media.dt.MediaPlayer;
+import dai.android.media.proxy.IMediaPlayer;
+import dai.android.media.proxy.IPlayCallBack;
+import dai.android.media.proxy.MediaPlayerProxy;
 import dai.android.video.iptv.data.Address;
 import dai.android.video.iptv.data.Category;
 import dai.android.video.iptv.data.Source;
 import dai.android.video.iptv.data.UrlBox;
 import dai.android.video.iptv.module.AddressManager;
 import dai.android.video.iptv.module.ILoader;
-import dai.android.video.iptv.player.AbstractPlayMonitor;
-import dai.android.video.iptv.player.LivePlayerManager;
-
-import tv.danmaku.ijk.media.player.IMediaPlayer;
+import dai.android.video.iptv.player.DtMediaPlay;
 
 public class MainActivity extends Activity {
     private static final String TAG = "ActivityMain";
 
-    private SurfaceView mVideoView;
+    private SurfaceView mDisplaySurface;
+    // MediaPlayer mMediaPlayer;
 
-    MediaPlayer mDtPlayer;
+    private IMediaPlayer mMediaPlayer;
 
 
     @Override
@@ -33,14 +33,109 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        mVideoView = findViewById(R.id.videoView);
-        mVideoView.getHolder().addCallback(mCallBack);
+        mDisplaySurface = findViewById(R.id.displaySurface);
+        mDisplaySurface.getHolder().addCallback(mCallBack);
 
         // LivePlayerManager.get().createMedia();
         AddressManager.get().setLoader(mLoader);
 
-        mDtPlayer = new MediaPlayer(this, true);
-        mDtPlayer.setOnPreparedListener(mOnPreparedListener);
+        // mMediaPlayer = new MediaPlayer(this, false);
+        DtMediaPlay dtPlayer = new DtMediaPlay(this);
+        mMediaPlayer = new MediaPlayerProxy(dtPlayer);
+        mMediaPlayer.setPlayCallBack(mPlayCallBack);
+    }
+
+    private IPlayCallBack mPlayCallBack = new IPlayCallBack() {
+        @Override
+        public void onBufferingUpdate(IMediaPlayer mp, int percent) {
+
+        }
+
+        @Override
+        public void onCompletion(IMediaPlayer mp) {
+
+        }
+
+        @Override
+        public boolean onError(IMediaPlayer mp, int what, int extra) {
+            return false;
+        }
+
+        @Override
+        public boolean onInfo(IMediaPlayer mp, int what, int extra) {
+            return false;
+        }
+
+        @Override
+        public void onPause(IMediaPlayer mp) {
+
+        }
+
+        @Override
+        public void onPrepared(IMediaPlayer mp) {
+            Logger.d(TAG, "this prepared");
+            if (null != mMediaPlayer) {
+                mMediaPlayer.start();
+            }
+        }
+
+        @Override
+        public void onPrepare(IMediaPlayer mp) {
+
+        }
+
+        @Override
+        public void onSeekComplete(IMediaPlayer mp) {
+
+        }
+
+        @Override
+        public void onSeek(IMediaPlayer mp) {
+
+        }
+
+        @Override
+        public void onStart(IMediaPlayer mp) {
+
+        }
+
+        @Override
+        public void onStop(IMediaPlayer mp) {
+
+        }
+
+        @Override
+        public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
+
+        }
+
+        @Override
+        public void onReset() {
+
+        }
+
+        @Override
+        public void onRelease() {
+
+        }
+    };
+
+    private void startMediaPlayer(String url) {
+        try {
+            if (null == mMediaPlayer) {
+                return;
+            }
+            if (mMediaPlayer.isPlaying()) {
+                return;
+            }
+
+            mMediaPlayer.setDataSource(url);
+            mMediaPlayer.setDisplay(mDisplaySurface.getHolder());
+            mMediaPlayer.prepareAsync();
+            // mMediaPlayer.start();
+
+        } catch (Exception ex) {
+        }
     }
 
     private void setDefaultDataSource() {
@@ -52,47 +147,32 @@ public class MainActivity extends Activity {
             List<Category> categories = item.getCategories();
             if (null != categories && !categories.isEmpty()) {
                 Category category = categories.get(2);
-                // Category category = categories.get(1);
-                Logger.v(TAG, "category: " + category.getCategory());
                 Address address = category.getAddress().get(7);
-                // Address address = category.getAddress().get(3);
                 Logger.d(TAG, "play address: " + address.getAddress());
-                //LivePlayerManager.get().setDataSource(address.getAddress());
-                //LivePlayerManager.get().add(mPlayerMonitor);
-                //LivePlayerManager.get().prepareAsync();
-
                 try {
-                    mDtPlayer.setDataSource(address.getAddress());
-                    mDtPlayer.setDisplay(mVideoView.getHolder());
-                    mDtPlayer.prepare();
-                    mDtPlayer.start();
+                    mMediaPlayer.setDataSource(address.getAddress());
+                    mMediaPlayer.setDisplay(mDisplaySurface.getHolder());
+                    mMediaPlayer.prepareAsync();
+                    mMediaPlayer.start();
                 } catch (Exception e) {
                 }
-
-
             }
         }
     }
 
-    private MediaPlayer.OnPreparedListener mOnPreparedListener = new MediaPlayer.OnPreparedListener() {
-        @Override
-        public void onPrepared(MediaPlayer mp) {
-
-        }
-    };
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        LivePlayerManager.get().pause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        LivePlayerManager.get().release();
+        if (null != mMediaPlayer) {
+            mMediaPlayer.release();
+        }
     }
 
 
@@ -102,49 +182,31 @@ public class MainActivity extends Activity {
     private ILoader mLoader = new ILoader() {
         @Override
         public void onAddressLoader() {
-            setDefaultDataSource();
+            //setDefaultDataSource();
         }
     };
 
-    private AbstractPlayMonitor mPlayerMonitor = new AbstractPlayMonitor() {
-        @Override
-        public void onBufferingUpdate(IMediaPlayer player, int i) {
-            //Logger.d(TAG, "onBufferingUpdate: " + i);
-        }
-
-        @Override
-        public void onCompletion(IMediaPlayer player) {
-            Logger.d(TAG, "[onCompletion]");
-        }
-
-        @Override
-        public boolean onError(IMediaPlayer player, int what, int extra) {
-            Logger.d(TAG, "[onError( " + what + ", " + extra + " )]");
-            return true;
-        }
-
-        @Override
-        public void onPrepared(IMediaPlayer player) {
-            Logger.v(TAG, "onPrepared");
-            LivePlayerManager.get().start();
-        }
-
-        @Override
-        public boolean onInfo(IMediaPlayer player, int what, int extra) {
-            Logger.d(TAG, "[onInfo( " + what + ", " + extra + " )]");
-            return true;
-        }
-    };
 
     private SurfaceHolder.Callback mCallBack = new SurfaceHolder.Callback() {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            Logger.v(TAG, "surface created");
-            LivePlayerManager.get().setDisplay(holder);
+            Logger.d(TAG, "surface created");
         }
 
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            //startMediaPlayer("rtsp://113.136.42.41:554/PLTV/88888888/224/3221226131/10000100000000060000000001817714_0.smil");
+            // startMediaPlayer("http://v.cic.tsinghua.edu.cn:8080/live/tsinghuatv.flv");
+            // 大白兔
+            // startMediaPlayer("rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov");
+            //startMediaPlayer("http://alhls.cdn.zhanqi.tv/zqlive/264147_VU1iK.m3u8");
+
+            //startMediaPlayer("http://dlhls.cdn.zhanqi.tv/zqlive/96851_ZeePd.m3u8");
+            // startMediaPlayer("http://dlhls.cdn.zhanqi.tv/zqlive/123407_XhQs9_1024/index.m3u8");
+            startMediaPlayer("http://dlhls.cdn.zhanqi.tv/zqlive/123407_XhQs9_1024/index.m3u8");
+            // startMediaPlayer("rtsp://113.136.42.39:554/PLTV/88888888/224/3221226033/10000100000000060000000001580493_0.smil");
+
+            // startMediaPlayer("rtsp://119.39.49.116:554/ch00000090990000001192.sdp?vcdnid=001");
         }
 
         @Override
