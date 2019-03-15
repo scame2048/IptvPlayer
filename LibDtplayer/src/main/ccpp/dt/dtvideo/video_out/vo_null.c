@@ -6,21 +6,18 @@
 
 #define TAG "VO-NULL"
 
-static int vo_null_init(vo_context_t * voc)
-{
-    dt_info(TAG, "init vo null OK\n");
+static int vo_null_init( vo_context_t * voc ) {
+    dt_info( TAG, "init vo null OK\n" );
     return 0;
 }
 
-static int vo_null_stop(vo_context_t * voc)
-{
-    dt_info(TAG, "uninit vo sdl\n");
+static int vo_null_stop( vo_context_t * voc ) {
+    dt_info( TAG, "uninit vo sdl\n" );
     return 0;
 }
 
-static int vo_null_render(vo_context_t * voc, dt_av_frame_t * frame)
-{
-    dt_info(TAG, "vo null render one frame\n");
+static int vo_null_render( vo_context_t * voc, dt_av_frame_t * frame ) {
+    dt_info( TAG, "vo null render one frame\n" );
     return 0;
 }
 

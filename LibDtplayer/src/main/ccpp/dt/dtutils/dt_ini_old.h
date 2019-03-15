@@ -98,34 +98,34 @@ typedef struct {
 
 /* Connectors of this file (Prototypes) */
 
-bool OpenIniFile(cchr * FileName);
+bool OpenIniFile( cchr * FileName );
 
-bool ReadBool(cchr * Section, cchr * Key, bool Default);
-int ReadInt(cchr * Section, cchr * Key, int Default);
-double ReadDouble(cchr * Section, cchr * Key, double Default);
-cchr *ReadString(cchr * Section, cchr * Key, cchr * Default);
+bool ReadBool( cchr * Section, cchr * Key, bool Default );
+int ReadInt( cchr * Section, cchr * Key, int Default );
+double ReadDouble( cchr * Section, cchr * Key, double Default );
+cchr *ReadString( cchr * Section, cchr * Key, cchr * Default );
 
-void WriteBool(cchr * Section, cchr * Key, bool Value);
-void WriteInt(cchr * Section, cchr * Key, int Value);
-void WriteDouble(cchr * Section, cchr * Key, double Value);
-void WriteString(cchr * Section, cchr * Key, cchr * Value);
+void WriteBool( cchr * Section, cchr * Key, bool Value );
+void WriteInt( cchr * Section, cchr * Key, int Value );
+void WriteDouble( cchr * Section, cchr * Key, double Value );
+void WriteString( cchr * Section, cchr * Key, cchr * Value );
 
-bool DeleteKey(cchr * Section, cchr * Key);
+bool DeleteKey( cchr * Section, cchr * Key );
 
 void CloseIniFile();
-bool WriteIniFile(cchr * FileName);
+bool WriteIniFile( cchr * FileName );
 void CloseTypeFile();
 //ssg add
-int GetPrivateProfileString(char *appNam, char *keyNam, char *keyVal,
-                            char *fileNam);
-int WritePrivateProfileString(char *appNam, char *keyNam, char *keyVal,
-                              char *filNam);
-int OpenTypeFile(char *filNam);
-int GetTypeKeyVal(char *appNam, char *keyNam, char *keyVal);
-int SetTypeKeyVal(char *appNam, char *keyNam, char *keyVal);
-void CloseWriteFile(char *filNam);
+int GetPrivateProfileString( char *appNam, char *keyNam, char *keyVal,
+                             char *fileNam );
+int WritePrivateProfileString( char *appNam, char *keyNam, char *keyVal,
+                               char *filNam );
+int OpenTypeFile( char *filNam );
+int GetTypeKeyVal( char *appNam, char *keyNam, char *keyVal );
+int SetTypeKeyVal( char *appNam, char *keyNam, char *keyVal );
+void CloseWriteFile( char *filNam );
 
 /*API ADDED BY DTSOFT*/
-int GetEnv(char *appNam, char *keyNam, char *keyVal);
+int GetEnv( char *appNam, char *keyNam, char *keyVal );
 
 #endif

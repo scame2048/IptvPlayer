@@ -49,28 +49,28 @@ typedef struct {
 
 void video_register_all();
 void video_remove_all();
-void register_ext_vd(vd_wrapper_t *vo);
-void register_ext_vo(vo_wrapper_t *vo);
+void register_ext_vd( vd_wrapper_t *vo );
+void register_ext_vo( vo_wrapper_t *vo );
 
-int dtvideo_read_frame(void *priv, dt_av_pkt_t ** frame);
-dt_av_frame_t *dtvideo_output_read(void *priv);
-dt_av_frame_t *dtvideo_output_pre_read(void *priv);
-int dtvideo_get_avdiff(void *priv);
-int64_t dtvideo_get_current_pts(dtvideo_context_t * vctx);
-int video_first_frame_decoded(dtvideo_context_t * vctx);
-int64_t video_get_first_pts(dtvideo_context_t * vctx);
-int video_host_ioctl(void *priv, int cmd, unsigned long arg);
-int video_drop(dtvideo_context_t * vctx, int64_t target_pts);
-int64_t dtvideo_get_systime(void *priv);
-void dtvideo_update_systime(void *priv, int64_t sys_time);
-void dtvideo_update_pts(void *priv);
-int video_get_dec_state(dtvideo_context_t * vctx, dec_state_t * dec_state);
-int video_get_out_closed(dtvideo_context_t * vctx);
-int video_start(dtvideo_context_t * vctx);
-int video_pause(dtvideo_context_t * vctx);
-int video_resume(dtvideo_context_t * vctx);
-int video_stop(dtvideo_context_t * vctx);
-int video_init(dtvideo_context_t * vctx);
-int video_resize(dtvideo_context_t * vctx, int w, int h);
+int dtvideo_read_frame( void *priv, dt_av_pkt_t ** frame );
+dt_av_frame_t *dtvideo_output_read( void *priv );
+dt_av_frame_t *dtvideo_output_pre_read( void *priv );
+int dtvideo_get_avdiff( void *priv );
+int64_t dtvideo_get_current_pts( dtvideo_context_t * vctx );
+int video_first_frame_decoded( dtvideo_context_t * vctx );
+int64_t video_get_first_pts( dtvideo_context_t * vctx );
+int video_host_ioctl( void *priv, int cmd, unsigned long arg );
+int video_drop( dtvideo_context_t * vctx, int64_t target_pts );
+int64_t dtvideo_get_systime( void *priv );
+void dtvideo_update_systime( void *priv, int64_t sys_time );
+void dtvideo_update_pts( void *priv );
+int video_get_dec_state( dtvideo_context_t * vctx, dec_state_t * dec_state );
+int video_get_out_closed( dtvideo_context_t * vctx );
+int video_start( dtvideo_context_t * vctx );
+int video_pause( dtvideo_context_t * vctx );
+int video_resume( dtvideo_context_t * vctx );
+int video_stop( dtvideo_context_t * vctx );
+int video_init( dtvideo_context_t * vctx );
+int video_resize( dtvideo_context_t * vctx, int w, int h );
 
 #endif

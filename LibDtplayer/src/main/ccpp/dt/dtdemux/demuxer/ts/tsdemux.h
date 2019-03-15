@@ -113,9 +113,9 @@ struct ts_options_struct {
     uint16_t synclimit;
     const char *progname;
     const char *filename;
-    void *(*allocmem)(size_t nbytes);
-    void (*freemem)(void *ptr);
-    void *(*reallocmem)(void *ptr, size_t nbytes);
+    void *( *allocmem )( size_t nbytes );
+    void ( *freemem )( void *ptr );
+    void *( *reallocmem )( void *ptr, size_t nbytes );
 };
 
 /* ts_stream_t: represents the entire transport stream */
@@ -134,9 +134,9 @@ struct ts_stream_struct {
     /* Well-known PIDs */
     uint16_t nitpid;
     uint16_t tdtpid;
-    void *(*allocmem)(size_t nbytes);
-    void (*freemem)(void *ptr);
-    void *(*reallocmem)(void *ptr, size_t nbytes);
+    void *( *allocmem )( size_t nbytes );
+    void ( *freemem )( void *ptr );
+    void *( *reallocmem )( void *ptr, size_t nbytes );
 };
 
 struct ts_pat_struct {
@@ -255,28 +255,28 @@ struct ts_streamtype_struct {
 extern "C" {
 # endif
 
-ts_stream_t *ts_stream_create(const ts_options_t *opts);
+ts_stream_t *ts_stream_create( const ts_options_t *opts );
 
 /* Read a packet from a file and then decode it, dealing with padding
  * based upon the options associated with the stream.
  */
-int ts_stream_read_packetf(ts_stream_t *stream, ts_packet_t *dest, FILE *src);
+int ts_stream_read_packetf( ts_stream_t *stream, ts_packet_t *dest, FILE *src );
 
 /* Process a pre-read packet. The packet must be 188 bytes long and start
  * with a sync byte, unless the stream options indicate that a timecode
  * is present, in which case the packet will be prepended with a 32-bit
  * timecode value, resulting in a total of 192 bytes.
  */
-int ts_stream_read_packet(ts_stream_t *stream, ts_packet_t *dest, const uint8_t *bufp);
+int ts_stream_read_packet( ts_stream_t *stream, ts_packet_t *dest, const uint8_t *bufp );
 
 /* Retrieve the table with the given table_id (and optional PID) */
-ts_table_t *ts_stream_table_get(ts_stream_t *stream, uint8_t tableid, uint16_t pid);
+ts_table_t *ts_stream_table_get( ts_stream_t *stream, uint8_t tableid, uint16_t pid );
 
 /* Retrieve the metadata for a particular PID */
-ts_pidinfo_t *ts_stream_pid_get(ts_stream_t *stream, uint16_t pid);
+ts_pidinfo_t *ts_stream_pid_get( ts_stream_t *stream, uint16_t pid );
 
 /* Retrieve information about a given defined stream type */
-const ts_streamtype_t *ts_typeinfo(uint8_t stype);
+const ts_streamtype_t *ts_typeinfo( uint8_t stype );
 
 # ifdef __cplusplus
 }

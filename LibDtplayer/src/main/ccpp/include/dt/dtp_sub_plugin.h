@@ -44,9 +44,9 @@ typedef struct so_wrapper {
     int id;
     const char *name;
 
-    int (*so_init)(struct so_context *soc);
-    int (*so_stop)(struct so_context *soc);
-    int (*so_render)(struct so_context *soc, dtav_sub_frame_t * frame);
+    int ( *so_init )( struct so_context *soc );
+    int ( *so_stop )( struct so_context *soc );
+    int ( *so_render )( struct so_context *soc, dtav_sub_frame_t * frame );
     void *handle;
     struct so_wrapper *next;
     int private_data_size;

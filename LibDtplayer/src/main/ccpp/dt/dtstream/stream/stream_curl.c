@@ -15,23 +15,19 @@ typedef struct {
     int64_t file_size;
 } curl_ctx_t;
 
-static int stream_curl_open(stream_wrapper_t * wrapper, char *stream_name)
-{
+static int stream_curl_open( stream_wrapper_t * wrapper, char *stream_name ) {
     return DTERROR_NONE;
 }
 
-static int stream_curl_read(stream_wrapper_t * wrapper, uint8_t *buf, int len)
-{
+static int stream_curl_read( stream_wrapper_t * wrapper, uint8_t *buf, int len ) {
     return 0;
 }
 
-static int stream_curl_seek(stream_wrapper_t * wrapper, int64_t pos, int whence)
-{
+static int stream_curl_seek( stream_wrapper_t * wrapper, int64_t pos, int whence ) {
     return DTERROR_NONE;
 }
 
-static int stream_curl_close(stream_wrapper_t * wrapper)
-{
+static int stream_curl_close( stream_wrapper_t * wrapper ) {
     return 0;
 }
 

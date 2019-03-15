@@ -57,7 +57,7 @@ dt_service_mgt_t *dt_service_create();
  * @return 0 for success, negative errorcode otherwise
  *
  */
-int dt_service_release(dt_service_mgt_t *mgt);
+int dt_service_release( dt_service_mgt_t *mgt );
 
 /* *
  * Alloc service context
@@ -68,7 +68,7 @@ int dt_service_release(dt_service_mgt_t *mgt);
  * @return service_t pointer for success, NULL otherwise
  *
  */
-service_t *dt_alloc_service(int id, char *name);
+service_t *dt_alloc_service( int id, char *name );
 
 /* *
  * Register service to service manager
@@ -79,7 +79,7 @@ service_t *dt_alloc_service(int id, char *name);
  * @return 0 for success, negative errorcode otherwise
  *
  */
-int dt_register_service(dt_service_mgt_t *mgt, service_t * service);
+int dt_register_service( dt_service_mgt_t *mgt, service_t * service );
 
 /* *
  * Remove service from service manager
@@ -91,7 +91,7 @@ int dt_register_service(dt_service_mgt_t *mgt, service_t * service);
  * @return 0 for success, negative errorcode otherwise
  *
  */
-int dt_remove_service(dt_service_mgt_t *mgt, service_t * service);
+int dt_remove_service( dt_service_mgt_t *mgt, service_t * service );
 
 /* *
  * Alloc an event_t
@@ -102,7 +102,7 @@ int dt_remove_service(dt_service_mgt_t *mgt, service_t * service);
  * @return event_t pointer for success, NULL otherwise
  *
  */
-event_t *dt_alloc_event(int service, int type);
+event_t *dt_alloc_event( int service, int type );
 
 /* *
  * Send event to service manger, and make sure event
@@ -114,7 +114,7 @@ event_t *dt_alloc_event(int service, int type);
  * @return 0 for success, negative errorcode otherwise
  *
  */
-int dt_send_event_sync(dt_service_mgt_t *mgt, event_t * event);
+int dt_send_event_sync( dt_service_mgt_t *mgt, event_t * event );
 
 /* *
  * Send event to service manger - non block
@@ -125,7 +125,7 @@ int dt_send_event_sync(dt_service_mgt_t *mgt, event_t * event);
  * @return 0 for success, negative errorcode otherwise
  *
  */
-int dt_send_event(dt_service_mgt_t *mgt, event_t * event);
+int dt_send_event( dt_service_mgt_t *mgt, event_t * event );
 
 /* *
  * Get event from service
@@ -136,7 +136,7 @@ int dt_send_event(dt_service_mgt_t *mgt, event_t * event);
  * remove event from service
  *
  */
-event_t *dt_get_event(service_t * service);
+event_t *dt_get_event( service_t * service );
 
 /* *
  * Query event from service
@@ -147,6 +147,6 @@ event_t *dt_get_event(service_t * service);
  * not remove event from service
  *
  */
-event_t *dt_peek_event(service_t * service);
+event_t *dt_peek_event( service_t * service );
 
 #endif

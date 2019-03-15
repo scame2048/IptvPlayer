@@ -5,28 +5,27 @@
 #include "p_tsdemux.h"
 
 int
-ts__packet_decode(ts_packet_t *packet)
-{
+ts__packet_decode( ts_packet_t *packet ) {
     /*  size_t c; */
     uint16_t progid;
     int n;
 
     progid = 0;
-    if (packet->pid == PID_NULL) {
+    if ( packet->pid == PID_NULL ) {
         /* Do nothing */
         return 0;
     }
-    if (NULL == (packet->pidinfo = ts_stream_pid_get(packet->stream, packet->pid))) {
-        packet->pidinfo = ts__stream_pid_add(packet->stream, packet->pid);
+    if ( NULL == ( packet->pidinfo = ts_stream_pid_get( packet->stream, packet->pid ) ) ) {
+        packet->pidinfo = ts__stream_pid_add( packet->stream, packet->pid );
     }
     /*  else
         {
             printf("Found previously-defined PID 0x%04x of type %d\n", packet->pid, packet->pidinfo->pidtype);
         } */
     packet->pidinfo->seen = 1;
-    if (PT_SECTIONS == packet->pidinfo->pidtype) {
-        for (n = 0; packet->plofs < packet->payloadlen; n++) {
-            if (1 != ts__table_decode(packet, progid)) {
+    if ( PT_SECTIONS == packet->pidinfo->pidtype ) {
+        for ( n = 0; packet->plofs < packet->payloadlen; n++ ) {
+            if ( 1 != ts__table_decode( packet, progid ) ) {
                 break;
             }
         }

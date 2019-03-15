@@ -27,11 +27,11 @@ typedef struct {
 typedef struct stream_wrapper {
     char *name;
     int id;
-    int (*open)(struct stream_wrapper * wrapper, char *stream_name);
-    int64_t (*tell)(struct stream_wrapper * wrapper);
-    int (*read)(struct stream_wrapper * wrapper, uint8_t *buf, int len);
-    int (*seek)(struct stream_wrapper * wrapper, int64_t pos, int whence);
-    int (*close)(struct stream_wrapper * wrapper);
+    int ( *open )( struct stream_wrapper * wrapper, char *stream_name );
+    int64_t ( *tell )( struct stream_wrapper * wrapper );
+    int ( *read )( struct stream_wrapper * wrapper, uint8_t *buf, int len );
+    int ( *seek )( struct stream_wrapper * wrapper, int64_t pos, int whence );
+    int ( *close )( struct stream_wrapper * wrapper );
     void *stream_priv;          // point to priv context
     void *parent;               // point to parent, dtstream_context_t
     stream_ctrl_t info;

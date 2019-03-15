@@ -44,13 +44,12 @@ static const ts_streamtype_t streamtypes[] = {
 };
 
 const ts_streamtype_t *
-ts_typeinfo(uint8_t stype)
-{
+ts_typeinfo( uint8_t stype ) {
     size_t c;
 
-    for (c = 0; streamtypes[c].name; c++) {
-        if (streamtypes[c].stype == stype) {
-            return &(streamtypes[c]);
+    for ( c = 0; streamtypes[c].name; c++ ) {
+        if ( streamtypes[c].stype == stype ) {
+            return &( streamtypes[c] );
         }
     }
     return NULL;

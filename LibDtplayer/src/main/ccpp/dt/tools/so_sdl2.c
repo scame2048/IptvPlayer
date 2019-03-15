@@ -22,21 +22,18 @@ typedef struct so_sdl2_ctx {
     int id;
 } so_sdl2_ctx;
 
-static int so_sdl2_init(so_context_t * soc)
-{
-    dt_info(TAG, "init so sdl2 OK\n");
+static int so_sdl2_init( so_context_t * soc ) {
+    dt_info( TAG, "init so sdl2 OK\n" );
     return 0;
 }
 
-static int so_sdl2_stop(so_context_t * soc)
-{
-    dt_info(TAG, "stop so sdl2\n");
+static int so_sdl2_stop( so_context_t * soc ) {
+    dt_info( TAG, "stop so sdl2\n" );
     return 0;
 }
 
-static int so_sdl2_render(so_context_t * soc, dtav_sub_frame_t * frame)
-{
-    dt_info(TAG, "sub rennder ok\n");
+static int so_sdl2_render( so_context_t * soc, dtav_sub_frame_t * frame ) {
+    dt_info( TAG, "sub rennder ok\n" );
     return 0;
 }
 
@@ -46,5 +43,5 @@ so_wrapper_t so_sdl2_ops = {
     .so_init = so_sdl2_init,
     .so_stop = so_sdl2_stop,
     .so_render = so_sdl2_render,
-    .private_data_size = sizeof(so_sdl2_ctx),
+    .private_data_size = sizeof( so_sdl2_ctx ),
 };

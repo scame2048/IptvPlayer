@@ -28,9 +28,9 @@ typedef struct {
 } adec_ctrl_t;
 
 typedef struct ad_wrapper {
-    int (*init)(struct ad_wrapper * wrapper, void *parent);
-    int (*decode_frame)(struct ad_wrapper * wrapper, adec_ctrl_t *pinfo);
-    int (*release)(struct ad_wrapper * wrapper);
+    int ( *init )( struct ad_wrapper * wrapper, void *parent );
+    int ( *decode_frame )( struct ad_wrapper * wrapper, adec_ctrl_t *pinfo );
+    int ( *release )( struct ad_wrapper * wrapper );
     char *name;
     dtaudio_format_t afmt;        //not used, for ffmpeg
     int type;

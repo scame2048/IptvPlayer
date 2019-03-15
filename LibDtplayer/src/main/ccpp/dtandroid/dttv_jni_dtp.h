@@ -24,24 +24,23 @@ const static int MEDIA_HW_ERROR          = 400;
 const static int MEDIA_TIMED_TEXT        = 1000;
 const static int MEDIA_CACHING_UPDATE    = 2000;
 
-class DTPlayer
-{
-public:
+class DTPlayer {
+  public:
     DTPlayer();
 
-    DTPlayer(dttvListenner *listenner);
+    DTPlayer( dttvListenner *listenner );
 
     ~DTPlayer();
 
-    int setGLContext(void *pgl);
+    int setGLContext( void *pgl );
 
-    int setListenner(dttvListenner *listenner);
+    int setListenner( dttvListenner *listenner );
 
     dttvListenner *getListenner();
 
-    void setNativeWindow(ANativeWindow *window);
+    void setNativeWindow( ANativeWindow *window );
 
-    void setSurface(void *surface);
+    void setSurface( void *surface );
 
     void setGLSurfaceView();
 
@@ -49,7 +48,7 @@ public:
 
     void setupRender();
 
-    int setDataSource(const char *uri);
+    int setDataSource( const char *uri );
 
     int prePare();
 
@@ -59,7 +58,7 @@ public:
 
     int pause();
 
-    int seekTo(int pos);
+    int seekTo( int pos );
 
     int stop();
 
@@ -67,9 +66,9 @@ public:
 
     int reset();
 
-    int setVideoMode(int mode);
+    int setVideoMode( int mode );
 
-    int setVideoSize(int w, int h);
+    int setVideoSize( int w, int h );
 
     int getVideoHeight();
 
@@ -85,18 +84,17 @@ public:
 
     int getDuration();
 
-    int setAudioEffect(int id);
+    int setAudioEffect( int id );
 
-    int setHWEnable(int enable);
+    int setHWEnable( int enable );
 
-    int Notify(int msg);
+    int Notify( int msg );
 
-    static int notify(void *cookie, dtp_state_t *state);
+    static int notify( void *cookie, dtp_state_t *state );
 
-private:
+  private:
 
-    enum
-    {
+    enum {
         PLAYER_IDLE = 0X0,
         PLAYER_INITED = 0x01,
         PLAYER_PREPARED = 0x02,

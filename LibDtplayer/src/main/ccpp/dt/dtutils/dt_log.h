@@ -14,13 +14,13 @@ typedef enum {
     DT_LOG_MAX
 } DT_LOG_LEVEL;
 
-void dt_log(void *tag, DT_LOG_LEVEL level, const char *fmt, ...);
-void dt_error(void *tag, const char *fmt, ...);  // default error level
-void dt_debug(void *tag, const char *fmt, ...);  // default debug level
-void dt_warning(void *tag, const char *fmt, ...);  // default warning level
-void dt_info(void *tag, const char *fmt, ...);  // default info level
+void dt_log( void *tag, DT_LOG_LEVEL level, const char *fmt, ... );
+void dt_error( void *tag, const char *fmt, ... ); // default error level
+void dt_debug( void *tag, const char *fmt, ... ); // default debug level
+void dt_warning( void *tag, const char *fmt, ... ); // default warning level
+void dt_info( void *tag, const char *fmt, ... ); // default info level
 
-void dt_set_log_level(int level);
-void dt_get_log_level(int level);
+void dt_set_log_level( int level );
+void dt_get_log_level( int level );
 
 #endif

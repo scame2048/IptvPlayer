@@ -16,152 +16,136 @@ extern so_wrapper_t so_android_ops;
 namespace android {
 
 DTPlayer::DTPlayer()
-    : mListenner(NULL),
-      status(0),
-      mHWEnable(1),
-      mDtpHandle(NULL),
-      mCurrentPosition(-1),
-      mSeekPosition(-1),
-      mDuration(-1),
-      mDisplayHeight(0),
-      mDisplayWidth(0)
-{
-    memset(&media_info, 0, sizeof(dtp_media_info_t));
-    lock_init(&dtp_mutex, NULL);
+    : mListenner( NULL ),
+      status( 0 ),
+      mHWEnable( 1 ),
+      mDtpHandle( NULL ),
+      mCurrentPosition( -1 ),
+      mSeekPosition( -1 ),
+      mDuration( -1 ),
+      mDisplayHeight( 0 ),
+      mDisplayWidth( 0 ) {
+    memset( &media_info, 0, sizeof( dtp_media_info_t ) );
+    lock_init( &dtp_mutex, NULL );
     mNativeWindow = -1;
     mSurface = -1;
     mRenderType = 0;
-    LOGV("dtplayer constructor ok \n");
+    LOGV( "dtplayer constructor ok \n" );
 }
 
-DTPlayer::DTPlayer(dttvListenner *listenner)
-    : status(0),
-      mHWEnable(1),
-      mDtpHandle(NULL),
-      mCurrentPosition(-1),
-      mSeekPosition(-1),
-      mDuration(-1),
-      mDisplayHeight(0),
-      mDisplayWidth(0)
-{
-    memset(&media_info, 0, sizeof(dtp_media_info_t));
-    lock_init(&dtp_mutex, NULL);
+DTPlayer::DTPlayer( dttvListenner *listenner )
+    : status( 0 ),
+      mHWEnable( 1 ),
+      mDtpHandle( NULL ),
+      mCurrentPosition( -1 ),
+      mSeekPosition( -1 ),
+      mDuration( -1 ),
+      mDisplayHeight( 0 ),
+      mDisplayWidth( 0 ) {
+    memset( &media_info, 0, sizeof( dtp_media_info_t ) );
+    lock_init( &dtp_mutex, NULL );
     mListenner = listenner;
     mNativeWindow = -1;
     mSurface = -1;
     mRenderType = 0;
-    LOGV("dtplayer constructor ok \n");
+    LOGV( "dtplayer constructor ok \n" );
 }
 
-DTPlayer::~DTPlayer()
-{
+DTPlayer::~DTPlayer() {
     status = 0;
     mCurrentPosition = mSeekPosition = -1;
     mDtpHandle = NULL; // free in dtplayer
     mListenner = NULL; // free in jni
-    LOGV("dtplayer destructor called \n");
+    LOGV( "dtplayer destructor called \n" );
 }
 
-int DTPlayer::setGLContext(void *p)
-{
+int DTPlayer::setGLContext( void *p ) {
     mGLContext = p;
     return 0;
 }
 
-int DTPlayer::setListenner(dttvListenner *listenner)
-{
-    LOGV("[%lu:%p] [%lu:%p]", sizeof(mListenner), this->mListenner, sizeof(listenner), listenner);
+int DTPlayer::setListenner( dttvListenner *listenner ) {
+    LOGV( "[%lu:%p] [%lu:%p]", sizeof( mListenner ), this->mListenner, sizeof( listenner ), listenner );
     this->mListenner = listenner;
     return 0;
 }
 
-dttvListenner *DTPlayer::getListenner()
-{
+dttvListenner *DTPlayer::getListenner() {
     return mListenner;
 }
 
 
-void DTPlayer::setSurface(void *surface)
-{
-    mSurface = (unsigned long) surface;
+void DTPlayer::setSurface( void *surface ) {
+    mSurface = ( unsigned long ) surface;
     mRenderType = 0;
 }
 
-void DTPlayer::setGLSurfaceView()
-{
-    LOGV("Use GLSurfaceView. Register gl render \n");
+void DTPlayer::setGLSurfaceView() {
+    LOGV( "Use GLSurfaceView. Register gl render \n" );
     mRenderType = 0;
 }
 
-int DTPlayer::supportMediaCodec()
-{
+int DTPlayer::supportMediaCodec() {
     dtp_media_info_t info;
     int ret = 0;
     dtvideo_format_t vfmt;
     dtaudio_format_t afmt;
 
-    ret = dtplayer_get_mediainfo(mDtpHandle, &info);
-    if (ret < 0)
-    {
-        LOGV("Get mediainfo failed, quit \n");
+    ret = dtplayer_get_mediainfo( mDtpHandle, &info );
+    if ( ret < 0 ) {
+        LOGV( "Get mediainfo failed, quit \n" );
         return 0;
     }
 
-    if (info.has_video == 0)
+    if ( info.has_video == 0 )
         return 0;
     vstream_info_t *stream = info.tracks.vstreams[info.cur_vst_index];
     vfmt = stream->format;
-    if (vfmt == DT_VIDEO_FORMAT_H264 || vfmt == DT_VIDEO_FORMAT_HEVC)
+    if ( vfmt == DT_VIDEO_FORMAT_H264 || vfmt == DT_VIDEO_FORMAT_HEVC )
         return 1;
 
     return 0;
 }
 
-void DTPlayer::setupRender()
-{
+void DTPlayer::setupRender() {
     dtp_media_info_t info;
     int ret = 0;
     dtaudio_format_t afmt;
-    ret = dtplayer_get_mediainfo(mDtpHandle, &info);
-    if (ret < 0)
-    {
-        LOGV("Get mediainfo failed, quit \n");
+    ret = dtplayer_get_mediainfo( mDtpHandle, &info );
+    if ( ret < 0 ) {
+        LOGV( "Get mediainfo failed, quit \n" );
         return;
     }
 
     // audio render setup
-    if (info.has_audio)
-    {
+    if ( info.has_audio ) {
         astream_info_t *stream = info.tracks.astreams[info.cur_ast_index];
         afmt = stream->format;
-        LOGI("current afmt: %d \n", afmt);
-        dtplayer_register_plugin(DTP_PLUGIN_TYPE_AO, &ao_opensl_ops);
+        LOGI( "current afmt: %d \n", afmt );
+        dtplayer_register_plugin( DTP_PLUGIN_TYPE_AO, &ao_opensl_ops );
     }
 
     // video render setup
-    if (info.has_video)
-    {
-        dtplayer_register_plugin(DTP_PLUGIN_TYPE_VO, &vo_android_surface);
-        dtplayer_set_parameter(mDtpHandle, DTP_CMD_SET_VODEVICE, mSurface);
-        LOGI("setup render. use %s.\n", (mRenderType == 0) ? "surfaceview" : "opengl");
+    if ( info.has_video ) {
+        dtplayer_register_plugin( DTP_PLUGIN_TYPE_VO, &vo_android_surface );
+        dtplayer_set_parameter( mDtpHandle, DTP_CMD_SET_VODEVICE, mSurface );
+        LOGI( "setup render. use %s.\n", ( mRenderType == 0 ) ? "surfaceview" : "opengl" );
     }
 
     // sub render setup
-    if(info.has_sub)
-    {
-        dtplayer_register_plugin(DTP_PLUGIN_TYPE_SO, &so_android_ops);
-        LOGI("register android vo.\n");
+    if( info.has_sub ) {
+        dtplayer_register_plugin( DTP_PLUGIN_TYPE_SO, &so_android_ops );
+        LOGI( "register android vo.\n" );
     }
 
     return;
 }
 
-int DTPlayer::setDataSource(const char *file_name)
-{
+int DTPlayer::setDataSource( const char *file_name ) {
     int ret = 0;
     dtp_media_info_t info;
     dtplayer_para_t para;
-    memset(&para, 0, sizeof(dtplayer_para_t));
+    memset( &para, 0, sizeof( dtplayer_para_t ) );
     para.disable_audio = para.disable_video = para.disable_sub = -1;
     para.height = para.width = -1;
     para.loop_mode = 1;
@@ -169,130 +153,116 @@ int DTPlayer::setDataSource(const char *file_name)
     para.update_cb = NULL;
     para.disable_avsync = 0;
 
-    memcpy(mUrl, file_name, strlen(file_name));
-    mUrl[strlen(file_name)] = '\0';
+    memcpy( mUrl, file_name, strlen( file_name ) );
+    mUrl[strlen( file_name )] = '\0';
     para.file_name = mUrl;
     para.cookie = this;
     para.update_cb = notify;
     //para.disable_audio=1;
     //para.disable_video=1;
     //para.disable_sub = 1;
-    if (!mHWEnable)
-    {
+    if ( !mHWEnable ) {
         para.disable_hw_vcodec = 1;
-        LOGV("disable hw codec\n");
+        LOGV( "disable hw codec\n" );
     }
     para.width = -1;
     para.height = -1;
 
     void *handle = NULL;
 
-    if (mDtpHandle != NULL)
-    {
-        LOGV("last player is running\n");
+    if ( mDtpHandle != NULL ) {
+        LOGV( "last player is running\n" );
         goto FAILED;
     }
 
     // default avoptions
     //dtplayer_set_option(NULL, OPTION_CATEGORY_FFMPEG, "protocol_whitelist", "file,http,hls,udp,rtp,rtsp,tcp");
     //dtplayer_set_option(NULL, OPTION_CATEGORY_FFMPEG, "timeout", "5000000");
-    dtplayer_set_option(NULL, OPTION_CATEGORY_DTP, "player.live_timeout", "5000");
-    dtplayer_set_option(NULL, OPTION_CATEGORY_DTP, "player.log_level", "2");
-    dtplayer_set_option(NULL, OPTION_CATEGORY_DTP, "port.audio_max_num", "8");
-    dtplayer_set_option(NULL, OPTION_CATEGORY_DTP, "port.audio_max_size", "10000000"); // 10M
-    dtplayer_set_option(NULL, OPTION_CATEGORY_DTP, "port.video_max_num", "8");
-    dtplayer_set_option(NULL, OPTION_CATEGORY_DTP, "port.video_max_size", "50000000"); // 50M
+    dtplayer_set_option( NULL, OPTION_CATEGORY_DTP, "player.live_timeout", "5000" );
+    dtplayer_set_option( NULL, OPTION_CATEGORY_DTP, "player.log_level", "2" );
+    dtplayer_set_option( NULL, OPTION_CATEGORY_DTP, "port.audio_max_num", "8" );
+    dtplayer_set_option( NULL, OPTION_CATEGORY_DTP, "port.audio_max_size", "10000000" ); // 10M
+    dtplayer_set_option( NULL, OPTION_CATEGORY_DTP, "port.video_max_num", "8" );
+    dtplayer_set_option( NULL, OPTION_CATEGORY_DTP, "port.video_max_size", "50000000" ); // 50M
 
     //reset var
     DTPlayer::status = 0;
     DTPlayer::mCurrentPosition = -1;
     DTPlayer::mSeekPosition = -1;
-    memset(&dtp_state, 0, sizeof(dtp_state_t));
+    memset( &dtp_state, 0, sizeof( dtp_state_t ) );
 
-    handle = dtplayer_init(&para);
-    if (!handle)
-    {
-        LOGV("player init failed \n");
+    handle = dtplayer_init( &para );
+    if ( !handle ) {
+        LOGV( "player init failed \n" );
         goto FAILED;
     }
     //get media info
-    ret = dtplayer_get_mediainfo(handle, &info);
-    if (ret < 0)
-    {
-        LOGV("Get mediainfo failed, quit \n");
+    ret = dtplayer_get_mediainfo( handle, &info );
+    if ( ret < 0 ) {
+        LOGV( "Get mediainfo failed, quit \n" );
         return -1;
     }
     //update dtPlayer info with mediainfo
 
-    memcpy(&media_info, &info, sizeof(dtp_media_info_t));
+    memcpy( &media_info, &info, sizeof( dtp_media_info_t ) );
     mDuration = info.duration;
     mDtpHandle = handle;
-    LOGV("Get Media Info Ok,filesize:%ld fulltime:%ld S \n", info.file_size, info.duration);
+    LOGV( "Get Media Info Ok,filesize:%ld fulltime:%ld S \n", info.file_size, info.duration );
 
     status = PLAYER_INITED;
     return 0;
 
 FAILED:
-    Notify(MEDIA_ERROR);
+    Notify( MEDIA_ERROR );
     return -1;
 }
 
-int DTPlayer::prePare()
-{
-    if (status != PLAYER_INITED)
-    {
-        Notify(MEDIA_INVALID_CMD);
+int DTPlayer::prePare() {
+    if ( status != PLAYER_INITED ) {
+        Notify( MEDIA_INVALID_CMD );
         return -1;
     }
     status = PLAYER_PREPARED;
-    Notify(MEDIA_PREPARED);
+    Notify( MEDIA_PREPARED );
     return 0;
 }
 
-int DTPlayer::prePareAsync()
-{
-    if (status != PLAYER_INITED)
-    {
-        Notify(MEDIA_INVALID_CMD);
+int DTPlayer::prePareAsync() {
+    if ( status != PLAYER_INITED ) {
+        Notify( MEDIA_INVALID_CMD );
         return -1;
     }
     status = PLAYER_PREPARED;
-    Notify(MEDIA_PREPARED);
+    Notify( MEDIA_PREPARED );
     return 0;
 }
 
-int DTPlayer::start()
-{
+int DTPlayer::start() {
     int ret = 0;
     void *handle = mDtpHandle;
 
-    if (status < PLAYER_PREPARED)
-    {
+    if ( status < PLAYER_PREPARED ) {
         ret = -1;
         goto END;
     }
 
-    if (!handle)
-    {
+    if ( !handle ) {
         ret = -1;
         goto END;
     }
-    if (status == PLAYER_PAUSED)   // maybe resume using start cmd
-    {
+    if ( status == PLAYER_PAUSED ) { // maybe resume using start cmd
         return pause();
     }
 
-    if (status != PLAYER_PREPARED)
-    {
-        LOGV("player is running \n");
+    if ( status != PLAYER_PREPARED ) {
+        LOGV( "player is running \n" );
         goto END;
     }
 
     setupRender();
 
-    ret = dtplayer_start(handle);
-    if (ret < 0)
-    {
+    ret = dtplayer_start( handle );
+    if ( ret < 0 ) {
         ret = -1;
         goto END;
     }
@@ -302,115 +272,93 @@ END:
     return ret;
 }
 
-int DTPlayer::pause()
-{
+int DTPlayer::pause() {
     void *handle = mDtpHandle;
-    lock(&dtp_mutex);
-    if (!handle)
-    {
-        unlock(&dtp_mutex);
+    lock( &dtp_mutex );
+    if ( !handle ) {
+        unlock( &dtp_mutex );
         return -1;
     }
-    if (status == PLAYER_RUNNING)
-    {
-        dtplayer_pause(handle);
+    if ( status == PLAYER_RUNNING ) {
+        dtplayer_pause( handle );
         status = PLAYER_PAUSED;
-    }
-    else if (status == PLAYER_PAUSED)
-    {
-        dtplayer_resume(handle);
+    } else if ( status == PLAYER_PAUSED ) {
+        dtplayer_resume( handle );
         status = PLAYER_RUNNING;
     }
 
-    unlock(&dtp_mutex);
+    unlock( &dtp_mutex );
     return 0;
 }
 
-int DTPlayer::seekTo(int pos) // ms
-{
+int DTPlayer::seekTo( int pos ) { // ms
     void *handle = mDtpHandle;
     int ret = 0;
 
-    LOGV("seekto %d s \n", pos);
-    lock(&dtp_mutex);
-    if (!handle)
-    {
+    LOGV( "seekto %d s \n", pos );
+    lock( &dtp_mutex );
+    if ( !handle ) {
         ret = -1;
         goto END;
     }
 
-    if (status == PLAYER_RUNNING || status == PLAYER_PAUSED || status == PLAYER_SEEKING)
-    {
-        if (pos < 0)
-        {
+    if ( status == PLAYER_RUNNING || status == PLAYER_PAUSED || status == PLAYER_SEEKING ) {
+        if ( pos < 0 ) {
             ret = -1;
             goto END;
         }
-        if (pos >= mDuration)
-        {
+        if ( pos >= mDuration ) {
             pos = mDuration;
         }
         mCurrentPosition = pos;
         status = PLAYER_SEEKING;
-        if (mSeekPosition < 0)
-        {
-            LOGV("seekTo execute \n");
+        if ( mSeekPosition < 0 ) {
+            LOGV( "seekTo execute \n" );
             mSeekPosition = pos;
-            dtplayer_seekto(handle, pos);
+            dtplayer_seekto( handle, pos );
+        } else {
+            LOGV( "seekTo is ececuting \n" );
         }
-        else
-        {
-            LOGV("seekTo is ececuting \n");
-        }
-    }
-    else
-    {
-        LOGV("seekTo is not ececuting in status:%d \n", status);
+    } else {
+        LOGV( "seekTo is not ececuting in status:%d \n", status );
     }
 
 END:
-    unlock(&dtp_mutex);
+    unlock( &dtp_mutex );
     return 0;
 }
 
-int DTPlayer::stop()
-{
+int DTPlayer::stop() {
     int ret = 0;
     void *handle = mDtpHandle;
-    if (!handle)
-    {
+    if ( !handle ) {
         ret = -1;
         goto END;
     }
-    if (status <= PLAYER_PREPARED)
-    {
+    if ( status <= PLAYER_PREPARED ) {
         ret = -1;
         goto END;
     }
 
-    if (status >= PLAYER_STOPPED)
-    {
+    if ( status >= PLAYER_STOPPED ) {
         goto END;
     }
 
     status = PLAYER_STOPPED;
-    ret = dtplayer_stop(handle);
+    ret = dtplayer_stop( handle );
 END:
     return ret;
 }
 
-int DTPlayer::reset()
-{
+int DTPlayer::reset() {
     //do nothing
     return 0;
 }
 
-int DTPlayer::setVideoMode(int mode)
-{
+int DTPlayer::setVideoMode( int mode ) {
     vstream_info_t *vstream = NULL;
     void *handle = mDtpHandle;
-    if (!handle)
-    {
+    if ( !handle ) {
         return -1;
     }
 
@@ -421,251 +369,214 @@ int DTPlayer::setVideoMode(int mode)
 
     int dw, dh;
     //reset w h
-    switch (mode)
-    {
-        case DT_SCREEN_MODE_NORMAL:
-            dw = orig_width;
-            dh = orig_height;
-            break;
-        case DT_SCREEN_MODE_FULL:
-            dw = orig_width;
-            dh = orig_height;
-            break;
-        case DT_SCREEN_MODE_16_9:
-            dw = orig_width;
-            dh = orig_height;
-            break;
-        case DT_SCREEN_MODE_4_3:
-            dw = orig_width;
-            dh = orig_height;
-            break;
-        default:
-            return 0;
+    switch ( mode ) {
+    case DT_SCREEN_MODE_NORMAL:
+        dw = orig_width;
+        dh = orig_height;
+        break;
+    case DT_SCREEN_MODE_FULL:
+        dw = orig_width;
+        dh = orig_height;
+        break;
+    case DT_SCREEN_MODE_16_9:
+        dw = orig_width;
+        dh = orig_height;
+        break;
+    case DT_SCREEN_MODE_4_3:
+        dw = orig_width;
+        dh = orig_height;
+        break;
+    default:
+        return 0;
     }
 
     //dtplayer_set_video_size(handle, dw, dh);
     return 0;
 }
 
-int DTPlayer::setVideoSize(int w, int h)
-{
+int DTPlayer::setVideoSize( int w, int h ) {
     void *handle = mDtpHandle;
-    if (!handle)
-    {
+    if ( !handle ) {
         return -1;
     }
     //dtplayer_set_video_size(handle, w, h);
     return 0;
 }
 
-int DTPlayer::getVideoWidth()
-{
+int DTPlayer::getVideoWidth() {
     void *handle = mDtpHandle;
     vstream_info_t *vstream = NULL;
-    if (!handle)
-    {
+    if ( !handle ) {
         return -1;
     }
-    if (media_info.tracks.vst_num == 0)
-    {
+    if ( media_info.tracks.vst_num == 0 ) {
         return -1;
     }
     vstream = media_info.tracks.vstreams[0];
     return vstream->width;
 }
 
-int DTPlayer::getVideoHeight()
-{
+int DTPlayer::getVideoHeight() {
     void *handle = mDtpHandle;
     vstream_info_t *vstream = NULL;
-    if (!handle)
-    {
+    if ( !handle ) {
         return -1;
     }
-    if (media_info.tracks.vst_num == 0)
-    {
+    if ( media_info.tracks.vst_num == 0 ) {
         return -1;
     }
     vstream = media_info.tracks.vstreams[0];
     return vstream->height;
 }
 
-dtp_media_info_t *DTPlayer::getMediaInfo()
-{
+dtp_media_info_t *DTPlayer::getMediaInfo() {
     return &media_info;
 }
 
-int DTPlayer::isPlaying()
-{
+int DTPlayer::isPlaying() {
     void *handle = mDtpHandle;
     int isPlaying = 1;
-    lock(&dtp_mutex);
-    if (!handle)
-    {
-        unlock(&dtp_mutex);
+    lock( &dtp_mutex );
+    if ( !handle ) {
+        unlock( &dtp_mutex );
         return -1;
     }
-    isPlaying = (status == PLAYER_RUNNING);
-    unlock(&dtp_mutex);
+    isPlaying = ( status == PLAYER_RUNNING );
+    unlock( &dtp_mutex );
     return isPlaying;
 }
 
-int DTPlayer::isQuitOK()
-{
+int DTPlayer::isQuitOK() {
     void *handle = mDtpHandle;
     int isQuitOK = 0;
-    lock(&dtp_mutex);
-    if (!handle)
-    {
-        unlock(&dtp_mutex);
+    lock( &dtp_mutex );
+    if ( !handle ) {
+        unlock( &dtp_mutex );
         return 1;
     }
-    isQuitOK = (status == PLAYER_EXIT);
-    unlock(&dtp_mutex);
+    isQuitOK = ( status == PLAYER_EXIT );
+    unlock( &dtp_mutex );
     return isQuitOK;
 }
 
-int DTPlayer::getCurrentPosition()
-{
+int DTPlayer::getCurrentPosition() {
     return mCurrentPosition;
 }
 
-int DTPlayer::getDuration()
-{
+int DTPlayer::getDuration() {
     void *handle = mDtpHandle;
-    lock(&dtp_mutex);
-    if (!handle)
-    {
-        unlock(&dtp_mutex);
+    lock( &dtp_mutex );
+    if ( !handle ) {
+        unlock( &dtp_mutex );
         return 0;
     }
-    unlock(&dtp_mutex);
+    unlock( &dtp_mutex );
     return mDuration;
 
 }
 
-int DTPlayer::setAudioEffect(int id)
-{
+int DTPlayer::setAudioEffect( int id ) {
     void *handle = mDtpHandle;
-    lock(&dtp_mutex);
-    if (!handle)
-    {
-        unlock(&dtp_mutex);
+    lock( &dtp_mutex );
+    if ( !handle ) {
+        unlock( &dtp_mutex );
         return 0;
     }
 #ifdef ENABLE_DTAP
-    dtap_change_effect(&ao, id);
+    dtap_change_effect( &ao, id );
 #endif
-    unlock(&dtp_mutex);
+    unlock( &dtp_mutex );
     return 0;
 }
 
-int DTPlayer::setHWEnable(int enable)
-{
-    mHWEnable = (enable == 0) ? 0 : 1;
+int DTPlayer::setHWEnable( int enable ) {
+    mHWEnable = ( enable == 0 ) ? 0 : 1;
     return 0;
 }
 
-int DTPlayer::Notify(int msg)
-{
-    if(mListenner)
-    {
-        mListenner->notify(msg);
+int DTPlayer::Notify( int msg ) {
+    if( mListenner ) {
+        mListenner->notify( msg );
     }
     return 0;
 }
 
-int DTPlayer::notify(void *cookie, dtp_state_t *state)
-{
-    DTPlayer *dtp = (DTPlayer *) cookie;
-    lock(&dtp->dtp_mutex);
+int DTPlayer::notify( void *cookie, dtp_state_t *state ) {
+    DTPlayer *dtp = ( DTPlayer * ) cookie;
+    lock( &dtp->dtp_mutex );
     int ret = 0;
     void *handle = dtp->mDtpHandle;
 
     // Handle Error
-    if (state->cur_status == PLAYER_STATUS_ERROR)
-    {
+    if ( state->cur_status == PLAYER_STATUS_ERROR ) {
         dtp->status = PLAYER_STOPPED;
-        dtp->Notify(MEDIA_ERROR);
-        LOGV("Error \n");
+        dtp->Notify( MEDIA_ERROR );
+        LOGV( "Error \n" );
         ret = -1;
         goto END;
     }
 
-    if (dtp->status == PLAYER_STOPPED)
-    {
+    if ( dtp->status == PLAYER_STOPPED ) {
         ret = -1;
         goto END;
     }
-    if (dtp->status == PLAYER_RUNNING)
-    {
+    if ( dtp->status == PLAYER_RUNNING ) {
         dtp->mCurrentPosition = state->cur_time;
     }
 
     // mediacodec support check
-    if (state->cur_status == PLAYER_STATUS_PREPARE_START)
-    {
-        LOGV("Check hw codec crated or not. vcodec type:%d. hw init:%d \n", state->vdec_type,
-             state->vdec_type == DT_VDEC_TYPE_FFMPEG);
-        if (state->vdec_type == DT_VDEC_TYPE_FFMPEG)
-        {
+    if ( state->cur_status == PLAYER_STATUS_PREPARE_START ) {
+        LOGV( "Check hw codec crated or not. vcodec type:%d. hw init:%d \n", state->vdec_type,
+              state->vdec_type == DT_VDEC_TYPE_FFMPEG );
+        if ( state->vdec_type == DT_VDEC_TYPE_FFMPEG ) {
 #if 0
-            if (dtp->mHWEnable == 1 && dtp->supportMediaCodec())
-            {
+            if ( dtp->mHWEnable == 1 && dtp->supportMediaCodec() ) {
                 dtp->mHWEnable = 0;
-                dtplayer_set_parameter(dtp->mDtpHandle, DTP_CMD_SET_VODEVICE,
-                                       dtp->mNativeWindow);
+                dtplayer_set_parameter( dtp->mDtpHandle, DTP_CMD_SET_VODEVICE,
+                                        dtp->mNativeWindow );
                 dtp->mSeekPosition = dtp->mCurrentPosition;
-                dtplayer_seekto(handle, dtp->mCurrentPosition);
+                dtplayer_seekto( handle, dtp->mCurrentPosition );
             }
 #endif
         }
         goto END;
     }
 
-    memcpy(&dtp->dtp_state, state, sizeof(dtp_state_t));
-    if (state->cur_status == PLAYER_STATUS_EXIT)
-    {
-        LOGV("PLAYER EXIT OK\n");
-        dtp->Notify(MEDIA_PLAYBACK_COMPLETE);
+    memcpy( &dtp->dtp_state, state, sizeof( dtp_state_t ) );
+    if ( state->cur_status == PLAYER_STATUS_EXIT ) {
+        LOGV( "PLAYER EXIT OK\n" );
+        dtp->Notify( MEDIA_PLAYBACK_COMPLETE );
         dtp->status = PLAYER_EXIT;
         goto END;
-    }
-    else if (state->cur_status == PLAYER_STATUS_SEEK_EXIT)
-    {
-        dtp->Notify(MEDIA_SEEK_COMPLETE);
-        if (dtp->mCurrentPosition != dtp->mSeekPosition)
-        {
+    } else if ( state->cur_status == PLAYER_STATUS_SEEK_EXIT ) {
+        dtp->Notify( MEDIA_SEEK_COMPLETE );
+        if ( dtp->mCurrentPosition != dtp->mSeekPosition ) {
             //still have seek request
             dtp->mSeekPosition = dtp->mCurrentPosition;
-            dtplayer_seekto(handle, dtp->mCurrentPosition);
-            LOGV("queued seek to %d \n", dtp->mCurrentPosition);
-        }
-        else
-        {
+            dtplayer_seekto( handle, dtp->mCurrentPosition );
+            LOGV( "queued seek to %d \n", dtp->mCurrentPosition );
+        } else {
             //last seek complete, return to running
             dtp->mSeekPosition = -1;
-            LOGV("seek complete !\n");
+            LOGV( "seek complete !\n" );
         }
         goto END;
     }
 
-    if (dtp->status == PLAYER_SEEKING && state->cur_status == PLAYER_STATUS_RUNNING &&
-        state->last_status == PLAYER_STATUS_SEEK_EXIT)
-    {
-        if (dtp->mSeekPosition > 0)   // receive seek again
-        {
+    if ( dtp->status == PLAYER_SEEKING && state->cur_status == PLAYER_STATUS_RUNNING &&
+            state->last_status == PLAYER_STATUS_SEEK_EXIT ) {
+        if ( dtp->mSeekPosition > 0 ) { // receive seek again
             goto END;
         }
-        LOGV("set status to running from seek complete \n");
+        LOGV( "set status to running from seek complete \n" );
         dtp->status = PLAYER_RUNNING;;
-        dtp->Notify(MEDIA_INFO);
+        dtp->Notify( MEDIA_INFO );
     }
 
-    LOGV("UPDATECB CURSTATUS:%x status:%d \n", state->cur_status, dtp->status);
-    LOGV("CUR TIME %ld S  FULL TIME:%ld  \n", state->cur_time, state->full_time);
+    LOGV( "UPDATECB CURSTATUS:%x status:%d \n", state->cur_status, dtp->status );
+    LOGV( "CUR TIME %ld S  FULL TIME:%ld  \n", state->cur_time, state->full_time );
 END:
-    unlock(&dtp->dtp_mutex);
+    unlock( &dtp->dtp_mutex );
     return ret;
 }
 

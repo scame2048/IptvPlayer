@@ -39,19 +39,19 @@ typedef struct {
 
 void sub_register_all();
 void sub_remove_all();
-void register_ext_sd(sd_wrapper_t *sd);
-void register_ext_so(so_wrapper_t *so);
-void register_ext_sf(sf_wrapper_t *sf);
-int64_t sub_get_current_pts(dtsub_context_t * sctx);
-int64_t sub_get_first_pts(dtsub_context_t * sctx);
-int sub_drop(dtsub_context_t * sctx, int64_t target_pts);
-int sub_get_dec_state(dtsub_context_t * sctx, dec_state_t * dec_state);
-int sub_get_out_closed(dtsub_context_t * sctx);
+void register_ext_sd( sd_wrapper_t *sd );
+void register_ext_so( so_wrapper_t *so );
+void register_ext_sf( sf_wrapper_t *sf );
+int64_t sub_get_current_pts( dtsub_context_t * sctx );
+int64_t sub_get_first_pts( dtsub_context_t * sctx );
+int sub_drop( dtsub_context_t * sctx, int64_t target_pts );
+int sub_get_dec_state( dtsub_context_t * sctx, dec_state_t * dec_state );
+int sub_get_out_closed( dtsub_context_t * sctx );
 
-int sub_start(dtsub_context_t * sctx);
-int sub_pause(dtsub_context_t * sctx);
-int sub_resume(dtsub_context_t * sctx);
-int sub_stop(dtsub_context_t * sctx);
-int sub_init(dtsub_context_t * sctx);
+int sub_start( dtsub_context_t * sctx );
+int sub_pause( dtsub_context_t * sctx );
+int sub_resume( dtsub_context_t * sctx );
+int sub_stop( dtsub_context_t * sctx );
+int sub_init( dtsub_context_t * sctx );
 
 #endif

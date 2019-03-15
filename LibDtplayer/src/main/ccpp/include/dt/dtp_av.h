@@ -429,11 +429,11 @@ typedef struct dtav_subtitle {
 } dtav_sub_frame_t;
 
 dt_av_frame_t *dtp_frame_alloc();
-void dtp_frame_unref(dt_av_frame_t *frame, int render);
-void dtp_frame_free(dt_av_frame_t *frame, int render);
+void dtp_frame_unref( dt_av_frame_t *frame, int render );
+void dtp_frame_free( dt_av_frame_t *frame, int render );
 
-dt_av_pkt_t *dtp_packet_alloc(void);
-void dtp_packet_free(dt_av_pkt_t *pkt);
+dt_av_pkt_t *dtp_packet_alloc( void );
+void dtp_packet_free( dt_av_pkt_t *pkt );
 
 #ifdef  __cplusplus
 }

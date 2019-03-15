@@ -20,10 +20,10 @@ typedef enum {
 typedef struct sf_wrapper {
     char *name;
     int type;
-    int (*capable)(sf_cap_t cap);
-    int (*init)(struct dtsub_filter *sf);
-    int (*process)(struct dtsub_filter *sf, dt_av_frame_t *frame);
-    int (*release)(struct dtsub_filter *sf);
+    int ( *capable )( sf_cap_t cap );
+    int ( *init )( struct dtsub_filter *sf );
+    int ( *process )( struct dtsub_filter *sf, dt_av_frame_t *frame );
+    int ( *release )( struct dtsub_filter *sf );
     struct sf_wrapper *next;
 } sf_wrapper_t;
 

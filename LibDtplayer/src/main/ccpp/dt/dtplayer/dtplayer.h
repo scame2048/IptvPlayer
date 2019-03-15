@@ -57,8 +57,8 @@ typedef struct dtplayer_context {
     void *host_priv;
 
     dtp_state_t state;
-    int (*update_cb)(void *cookie,
-                     dtp_state_t * state);  // update player info to uplevel
+    int ( *update_cb )( void *cookie,
+                        dtp_state_t * state ); // update player info to uplevel
 
     io_loop_t io_loop;
     pthread_t event_loop_id;
@@ -78,26 +78,26 @@ typedef struct dtplayer_context {
 
 void player_register_all();
 void player_remove_all();
-int player_init(dtplayer_context_t * dtp_ctx);
-int player_set_video_size(dtplayer_context_t * dtp_ctx, int width, int height);
-int player_prepare(dtplayer_context_t * dtp_ctx);
-int player_start(dtplayer_context_t * dtp_ctx);
-int player_pause(dtplayer_context_t * dtp_ctx);
-int player_resume(dtplayer_context_t * dtp_ctx);
-int player_dec_reset(dtplayer_context_t * dtp_ctx);
-int player_seekto(dtplayer_context_t * dtp_ctx, int seek_time); //s
-void set_player_status(dtplayer_context_t * dtp_ctx,
-                       player_status_t status);
-player_status_t get_player_status(dtplayer_context_t * dtp_ctx);
-int player_get_mediainfo(dtplayer_context_t * dtp_ctx,
-                         dtp_media_info_t *info); //s
-int player_stop(dtplayer_context_t * dtp_ctx);
-int player_video_resize(dtplayer_context_t * dtp_ctx, int w, int h);
-int player_get_parameter(dtplayer_context_t *dtp_ctx, int cmd,
-                         unsigned long arg);
-int player_set_parameter(dtplayer_context_t *dtp_ctx, int cmd,
-                         unsigned long arg);
-void player_set_option(dtplayer_context_t *dtp_ctx, int category,
-                       const char *name, const char *value);
+int player_init( dtplayer_context_t * dtp_ctx );
+int player_set_video_size( dtplayer_context_t * dtp_ctx, int width, int height );
+int player_prepare( dtplayer_context_t * dtp_ctx );
+int player_start( dtplayer_context_t * dtp_ctx );
+int player_pause( dtplayer_context_t * dtp_ctx );
+int player_resume( dtplayer_context_t * dtp_ctx );
+int player_dec_reset( dtplayer_context_t * dtp_ctx );
+int player_seekto( dtplayer_context_t * dtp_ctx, int seek_time ); //s
+void set_player_status( dtplayer_context_t * dtp_ctx,
+                        player_status_t status );
+player_status_t get_player_status( dtplayer_context_t * dtp_ctx );
+int player_get_mediainfo( dtplayer_context_t * dtp_ctx,
+                          dtp_media_info_t *info ); //s
+int player_stop( dtplayer_context_t * dtp_ctx );
+int player_video_resize( dtplayer_context_t * dtp_ctx, int w, int h );
+int player_get_parameter( dtplayer_context_t *dtp_ctx, int cmd,
+                          unsigned long arg );
+int player_set_parameter( dtplayer_context_t *dtp_ctx, int cmd,
+                          unsigned long arg );
+void player_set_option( dtplayer_context_t *dtp_ctx, int category,
+                        const char *name, const char *value );
 
 #endif

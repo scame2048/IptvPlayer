@@ -9,7 +9,7 @@ extern "C" {
 #include "dtp_state.h"
 #include "dtp_plugin.h"
 
-typedef int (*dtp_update_cb)(void *cookie, dtp_state_t * sta);
+typedef int ( *dtp_update_cb )( void *cookie, dtp_state_t * sta );
 
 enum option_category {
     OPTION_CATEGORY_FFMPEG = 0x0,
@@ -48,7 +48,7 @@ typedef struct dtplayer_para {
  * register external plugin to dtplayer
  *
  * */
-void dtplayer_register_plugin(dtp_plugin_type_t type, void *plugin);
+void dtplayer_register_plugin( dtp_plugin_type_t type, void *plugin );
 
 /*
  * do global initialization of dtplayer.
@@ -58,7 +58,7 @@ void dtplayer_register_plugin(dtp_plugin_type_t type, void *plugin);
  * @return handle - pointer to dtplayer handle which used for do more contrl works
  *
  * */
-void *dtplayer_init(dtplayer_para_t * para);
+void *dtplayer_init( dtplayer_para_t * para );
 
 /*
  * mediainfo:
@@ -70,7 +70,7 @@ void *dtplayer_init(dtplayer_para_t * para);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_get_mediainfo(void *handle, dtp_media_info_t *info);
+int dtplayer_get_mediainfo( void *handle, dtp_media_info_t *info );
 
 /*
  * query dtplayer information:
@@ -81,7 +81,7 @@ int dtplayer_get_mediainfo(void *handle, dtp_media_info_t *info);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_get_parameter(void *handle, int cmd, unsigned long reply);
+int dtplayer_get_parameter( void *handle, int cmd, unsigned long reply );
 
 /*
  * affect dtplayer with request:
@@ -92,7 +92,7 @@ int dtplayer_get_parameter(void *handle, int cmd, unsigned long reply);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_set_parameter(void *handle, int cmd, unsigned long request);
+int dtplayer_set_parameter( void *handle, int cmd, unsigned long request );
 
 /*
  * start playing:
@@ -103,7 +103,7 @@ int dtplayer_set_parameter(void *handle, int cmd, unsigned long request);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_start(void *handle);
+int dtplayer_start( void *handle );
 
 /*
  * pause player:
@@ -113,7 +113,7 @@ int dtplayer_start(void *handle);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_pause(void *handle);
+int dtplayer_pause( void *handle );
 
 /*
  * resume player:
@@ -123,7 +123,7 @@ int dtplayer_pause(void *handle);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_resume(void *handle);
+int dtplayer_resume( void *handle );
 
 /*
  * stop player:
@@ -133,7 +133,7 @@ int dtplayer_resume(void *handle);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_stop(void *handle);
+int dtplayer_stop( void *handle );
 
 /*
  * stop player async mode:
@@ -143,7 +143,7 @@ int dtplayer_stop(void *handle);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_stop_async(void *handle);
+int dtplayer_stop_async( void *handle );
 
 /*
  * seekto:
@@ -154,7 +154,7 @@ int dtplayer_stop_async(void *handle);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_seekto(void *handle, int dest_pos);
+int dtplayer_seekto( void *handle, int dest_pos );
 
 /*
  * dtplayer states update:
@@ -165,7 +165,7 @@ int dtplayer_seekto(void *handle, int dest_pos);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_get_states(void *handle, dtp_state_t * state);
+int dtplayer_get_states( void *handle, dtp_state_t * state );
 
 /*
  * dtplayer parameter request:
@@ -177,7 +177,7 @@ int dtplayer_get_states(void *handle, dtp_state_t * state);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_get_parameter(void *handle, int cmd, unsigned long arg);
+int dtplayer_get_parameter( void *handle, int cmd, unsigned long arg );
 
 /*
  * dtplayer parameter set:
@@ -189,7 +189,7 @@ int dtplayer_get_parameter(void *handle, int cmd, unsigned long arg);
  * @return ret - 0 success , negtive failed
  *
  * */
-int dtplayer_set_parameter(void *handle, int cmd, unsigned long arg);
+int dtplayer_set_parameter( void *handle, int cmd, unsigned long arg );
 
 /*
  * ffmpeg options set:
@@ -200,8 +200,8 @@ int dtplayer_set_parameter(void *handle, int cmd, unsigned long arg);
  * @return void
  *
  * */
-void dtplayer_set_option(void *handle, int category, const char *name,
-                         const char *value);
+void dtplayer_set_option( void *handle, int category, const char *name,
+                          const char *value );
 
 #ifdef  __cplusplus
 }

@@ -71,15 +71,15 @@ typedef struct gui_ctx {
     gui_rect_t rect;   // current display region
     void *context;     // pointer to player_t, NOT used now
 
-    int (*init)(struct gui_ctx *ctx);
-    gui_event_t (*get_event)(struct gui_ctx *ctx, args_t *arg);
-    int (*get_info)(struct gui_ctx *ctx, gui_cmd_t cmd, args_t *arg);
-    int (*set_info)(struct gui_ctx *ctx, gui_cmd_t cmd, args_t arg);
-    int (*stop)(struct gui_ctx *ctx);
+    int ( *init )( struct gui_ctx *ctx );
+    gui_event_t ( *get_event )( struct gui_ctx *ctx, args_t *arg );
+    int ( *get_info )( struct gui_ctx *ctx, gui_cmd_t cmd, args_t *arg );
+    int ( *set_info )( struct gui_ctx *ctx, gui_cmd_t cmd, args_t arg );
+    int ( *stop )( struct gui_ctx *ctx );
 } gui_ctx_t;
 
-int setup_gui(gui_ctx_t **gui, gui_para_t *para);
-int setup_ao(ao_wrapper_t *ao);
-int setup_vo(vo_wrapper_t *vo);
+int setup_gui( gui_ctx_t **gui, gui_para_t *para );
+int setup_ao( ao_wrapper_t *ao );
+int setup_vo( vo_wrapper_t *vo );
 
 #endif

@@ -38,9 +38,9 @@ typedef struct {
 struct vo_wrapper;
 struct vo_context;
 
-typedef int (*vo_init)(struct vo_context *ctx);
-typedef int (*vo_render)(struct vo_context *ctx, dt_av_frame_t * frame);
-typedef int (*vo_stop)(struct vo_context *ctx);
+typedef int ( *vo_init )( struct vo_context *ctx );
+typedef int ( *vo_render )( struct vo_context *ctx, dt_av_frame_t * frame );
+typedef int ( *vo_stop )( struct vo_context *ctx );
 
 typedef struct vo_wrapper {
     int id;
@@ -66,10 +66,10 @@ typedef enum {
 struct vf_wrapper;
 struct vf_context;
 
-typedef int (*vf_init)(struct vf_context *vfc);
-typedef int (*vf_process)(struct vf_context *vfc, dt_av_frame_t *frame);
-typedef int (*vf_capable)(vf_cap_t cap);
-typedef int (*vf_release)(struct vf_context *vfc);
+typedef int ( *vf_init )( struct vf_context *vfc );
+typedef int ( *vf_process )( struct vf_context *vfc, dt_av_frame_t *frame );
+typedef int ( *vf_capable )( vf_cap_t cap );
+typedef int ( *vf_release )( struct vf_context *vfc );
 
 typedef struct vf_wrapper {
     char *name;

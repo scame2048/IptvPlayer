@@ -20,10 +20,10 @@ typedef struct sd_wrapper {
     dtsub_format_t sfmt;
     int type;
 
-    int (*init)(struct dtsub_decoder *decoder);
-    int (*decode_frame)(struct dtsub_decoder *decoder, dt_av_pkt_t * pkt,
-                        dtav_sub_frame_t ** frame);
-    int (*release)(struct dtsub_decoder *decoder);
+    int ( *init )( struct dtsub_decoder *decoder );
+    int ( *decode_frame )( struct dtsub_decoder *decoder, dt_av_pkt_t * pkt,
+                           dtav_sub_frame_t ** frame );
+    int ( *release )( struct dtsub_decoder *decoder );
 
     void *sd_priv;
     struct sd_wrapper *next;

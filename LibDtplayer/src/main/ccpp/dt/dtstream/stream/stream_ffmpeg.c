@@ -11,8 +11,7 @@ static const char prefix[] = "ffmpeg://";
 #define AVSEEK_SIZE 0x10000
 #endif
 
-static int stream_ffmpeg_open(stream_wrapper_t * wrapper, char *stream_name)
-{
+static int stream_ffmpeg_open( stream_wrapper_t * wrapper, char *stream_name ) {
     int ret = 0;
     const char *filename = stream_name;
     AVIOContext *ctx = NULL;
@@ -24,63 +23,60 @@ static int stream_ffmpeg_open(stream_wrapper_t * wrapper, char *stream_name)
     av_register_all();
     avformat_network_init();
 
-    if (!strncmp(filename, prefix, strlen(prefix))) {
-        filename += strlen(prefix);
+    if ( !strncmp( filename, prefix, strlen( prefix ) ) ) {
+        filename += strlen( prefix );
     }
-    dummy = strncmp(filename, "rtsp:", 5);
-    if (!dummy) {
-        dt_info(TAG, "[ffmpeg] rtsp use ffmpeg inside streamer.\n");
+    dummy = strncmp( filename, "rtsp:", 5 );
+    if ( !dummy ) {
+        dt_info( TAG, "[ffmpeg] rtsp use ffmpeg inside streamer.\n" );
         return -1;
     }
-    dt_info(TAG, "[ffmpeg] Opening %s\n", filename);
-    ret = avio_open(&ctx, filename, flags);
-    if (ret < 0) {
-        dt_info(TAG, "[ffmpeg] Opening %s failed. ret:%d\n", filename, ret);
+    dt_info( TAG, "[ffmpeg] Opening %s\n", filename );
+    ret = avio_open( &ctx, filename, flags );
+    if ( ret < 0 ) {
+        dt_info( TAG, "[ffmpeg] Opening %s failed. ret:%d\n", filename, ret );
         return -1;
     }
     wrapper->stream_priv = ctx;
-    size = dummy ? 0 : avio_size(ctx);
+    size = dummy ? 0 : avio_size( ctx );
     info->stream_size = size;
     info->seek_support = ctx->seekable;
 
-    dt_info(TAG, "[ffmpeg] Opening %s ok. ret:%d\n", filename, ret);
+    dt_info( TAG, "[ffmpeg] Opening %s ok. ret:%d\n", filename, ret );
     return DTERROR_NONE;
 }
 
-static int stream_ffmpeg_read(stream_wrapper_t * wrapper, uint8_t *buf, int len)
-{
-    AVIOContext *ctx = (AVIOContext *)wrapper->stream_priv;
+static int stream_ffmpeg_read( stream_wrapper_t * wrapper, uint8_t *buf, int len ) {
+    AVIOContext *ctx = ( AVIOContext * )wrapper->stream_priv;
     stream_ctrl_t *info = &wrapper->info;
-    int r = avio_read(ctx, buf, len);
-    if (r > 0) {
+    int r = avio_read( ctx, buf, len );
+    if ( r > 0 ) {
         info->cur_pos += r;
     }
-    if (r <= 0) {
-        dt_info(TAG, "[ffmpeg] ffmpeg read failed, ret :%d \n", r);
+    if ( r <= 0 ) {
+        dt_info( TAG, "[ffmpeg] ffmpeg read failed, ret :%d \n", r );
         info->eof_flag = 1;
     }
-    return (r <= 0) ? -1 : r;
+    return ( r <= 0 ) ? -1 : r;
 }
 
-static int stream_ffmpeg_seek(stream_wrapper_t * wrapper, int64_t pos,
-                              int whence)
-{
-    AVIOContext *ctx = (AVIOContext *)wrapper->stream_priv;
+static int stream_ffmpeg_seek( stream_wrapper_t * wrapper, int64_t pos,
+                               int whence ) {
+    AVIOContext *ctx = ( AVIOContext * )wrapper->stream_priv;
     stream_ctrl_t *info = &wrapper->info;
     info->eof_flag = 0;
 
-    if (whence == AVSEEK_SIZE) {
-        dt_debug(TAG, "REQUEST STREAM SIZE:%lld \n", info->stream_size);
-        return avio_size(ctx);
+    if ( whence == AVSEEK_SIZE ) {
+        dt_debug( TAG, "REQUEST STREAM SIZE:%lld \n", info->stream_size );
+        return avio_size( ctx );
     }
 
-    return avio_seek(ctx, pos, whence);
+    return avio_seek( ctx, pos, whence );
 }
 
-static int stream_ffmpeg_close(stream_wrapper_t * wrapper)
-{
-    if (wrapper->stream_priv) {
-        avio_close((AVIOContext *)wrapper->stream_priv);
+static int stream_ffmpeg_close( stream_wrapper_t * wrapper ) {
+    if ( wrapper->stream_priv ) {
+        avio_close( ( AVIOContext * )wrapper->stream_priv );
     }
     wrapper->stream_priv = NULL;
     return 0;

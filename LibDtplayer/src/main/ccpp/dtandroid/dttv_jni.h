@@ -5,14 +5,14 @@
 #include <android/native_window_jni.h>
 
 class dttvListenner {
-public:
-    dttvListenner(JNIEnv *env, jobject thiz, jobject weak_thiz);
+  public:
+    dttvListenner( JNIEnv *env, jobject thiz, jobject weak_thiz );
 
     ~dttvListenner();
 
-    int notify(int, int ext1 = 0, int ext2 = 0);
+    int notify( int, int ext1 = 0, int ext2 = 0 );
 
-private:
+  private:
     dttvListenner();
 
     jclass mClass;   // Reference to DtPlayer class

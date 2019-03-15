@@ -39,16 +39,16 @@ typedef struct {
 struct ao_wrapper;
 struct ao_context;
 
-typedef int (*ao_init)(struct ao_context *aoc);
-typedef int (*ao_start)(struct ao_context *aoc);
-typedef int (*ao_pause)(struct ao_context *aoc);
-typedef int (*ao_resume)(struct ao_context *aoc);
-typedef int (*ao_write)(struct ao_context *aoc, uint8_t * buf, int size);
-typedef int (*ao_get_parameter)(struct ao_context *aoc, int cmd,
-                                unsigned long arg);
-typedef int (*ao_set_parameter)(struct ao_context *aoc, int cmd,
-                                unsigned long arg);
-typedef int (*ao_stop)(struct ao_context *aoc);
+typedef int ( *ao_init )( struct ao_context *aoc );
+typedef int ( *ao_start )( struct ao_context *aoc );
+typedef int ( *ao_pause )( struct ao_context *aoc );
+typedef int ( *ao_resume )( struct ao_context *aoc );
+typedef int ( *ao_write )( struct ao_context *aoc, uint8_t * buf, int size );
+typedef int ( *ao_get_parameter )( struct ao_context *aoc, int cmd,
+                                   unsigned long arg );
+typedef int ( *ao_set_parameter )( struct ao_context *aoc, int cmd,
+                                   unsigned long arg );
+typedef int ( *ao_stop )( struct ao_context *aoc );
 
 typedef struct ao_wrapper {
     int id;

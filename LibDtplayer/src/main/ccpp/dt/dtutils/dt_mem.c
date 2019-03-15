@@ -24,43 +24,41 @@
 
 static size_t max_alloc_size = INT_MAX;
 
-void dt_max_alloc(size_t max)
-{
+void dt_max_alloc( size_t max ) {
     max_alloc_size = max;
 }
 
-void *dt_malloc(size_t size)
-{
+void *dt_malloc( size_t size ) {
     void *ptr = NULL;
 #if CONFIG_MEMALIGN_HACK
     long diff;
 #endif
 
     /* let's disallow possibly ambiguous cases */
-    if (size > (max_alloc_size - 32)) {
+    if ( size > ( max_alloc_size - 32 ) ) {
         return NULL;
     }
 
 #if CONFIG_MEMALIGN_HACK
-    ptr = malloc(size + ALIGN);
-    if (!ptr) {
+    ptr = malloc( size + ALIGN );
+    if ( !ptr ) {
         return ptr;
     }
-    diff              = ((~(long)ptr) & (ALIGN - 1)) + 1;
-    ptr               = (char *)ptr + diff;
-    ((char *)ptr)[-1] = diff;
+    diff              = ( ( ~( long )ptr ) & ( ALIGN - 1 ) ) + 1;
+    ptr               = ( char * )ptr + diff;
+    ( ( char * )ptr )[-1] = diff;
 #elif HAVE_POSIX_MEMALIGN
-    if (size) //OS X on SDK 10.6 has a broken posix_memalign implementation
-        if (posix_memalign(&ptr, ALIGN, size)) {
+    if ( size ) //OS X on SDK 10.6 has a broken posix_memalign implementation
+        if ( posix_memalign( &ptr, ALIGN, size ) ) {
             ptr = NULL;
         }
 #elif HAVE_ALIGNED_MALLOC
-    ptr = _aligned_malloc(size, ALIGN);
+    ptr = _aligned_malloc( size, ALIGN );
 #elif HAVE_MEMALIGN
 #ifndef __DJGPP__
-    ptr = memalign(ALIGN, size);
+    ptr = memalign( ALIGN, size );
 #else
-    ptr = memalign(size, ALIGN);
+    ptr = memalign( size, ALIGN );
 #endif
     /* Why 64?
      * Indeed, we should align it:
@@ -87,195 +85,183 @@ void *dt_malloc(size_t size)
      * BTW, malloc seems to do 8-byte alignment by default here.
      */
 #else
-    ptr = malloc(size);
+    ptr = malloc( size );
 #endif
-    if (!ptr && !size) {
+    if ( !ptr && !size ) {
         size = 1;
-        ptr = dt_malloc(1);
+        ptr = dt_malloc( 1 );
     }
 #if CONFIG_MEMORY_POISONING
-    if (ptr) {
-        memset(ptr, FF_MEMORY_POISON, size);
+    if ( ptr ) {
+        memset( ptr, FF_MEMORY_POISON, size );
     }
 #endif
     return ptr;
 }
 
-void *dt_realloc(void *ptr, size_t size)
-{
+void *dt_realloc( void *ptr, size_t size ) {
 #if CONFIG_MEMALIGN_HACK
     int diff;
 #endif
 
     /* let's disallow possibly ambiguous cases */
-    if (size > (max_alloc_size - 32)) {
+    if ( size > ( max_alloc_size - 32 ) ) {
         return NULL;
     }
 
 #if CONFIG_MEMALIGN_HACK
     //FIXME this isn't aligned correctly, though it probably isn't needed
-    if (!ptr) {
-        return dt_malloc(size);
+    if ( !ptr ) {
+        return dt_malloc( size );
     }
-    diff = ((char *)ptr)[-1];
-    dt_assert0(diff > 0 && diff <= ALIGN);
-    ptr = realloc((char *)ptr - diff, size + diff);
-    if (ptr) {
-        ptr = (char *)ptr + diff;
+    diff = ( ( char * )ptr )[-1];
+    dt_assert0( diff > 0 && diff <= ALIGN );
+    ptr = realloc( ( char * )ptr - diff, size + diff );
+    if ( ptr ) {
+        ptr = ( char * )ptr + diff;
     }
     return ptr;
 #elif HAVE_ALIGNED_MALLOC
-    return _aligned_realloc(ptr, size + !size, ALIGN);
+    return _aligned_realloc( ptr, size + !size, ALIGN );
 #else
-    return realloc(ptr, size + !size);
+    return realloc( ptr, size + !size );
 #endif
 }
 
-void *dt_realloc_f(void *ptr, size_t nelem, size_t elsize)
-{
+void *dt_realloc_f( void *ptr, size_t nelem, size_t elsize ) {
     size_t size;
     void *r;
 
-    if (dt_size_mult(elsize, nelem, &size)) {
-        dt_free(ptr);
+    if ( dt_size_mult( elsize, nelem, &size ) ) {
+        dt_free( ptr );
         return NULL;
     }
-    r = dt_realloc(ptr, size);
-    if (!r && size) {
-        dt_free(ptr);
+    r = dt_realloc( ptr, size );
+    if ( !r && size ) {
+        dt_free( ptr );
     }
     return r;
 }
 
-int dt_reallocp(void *ptr, size_t size)
-{
+int dt_reallocp( void *ptr, size_t size ) {
     void *val;
 
-    if (!size) {
-        dt_freep(ptr);
+    if ( !size ) {
+        dt_freep( ptr );
         return 0;
     }
 
-    memcpy(&val, ptr, sizeof(val));
-    val = dt_realloc(val, size);
+    memcpy( &val, ptr, sizeof( val ) );
+    val = dt_realloc( val, size );
 
-    if (!val) {
-        dt_freep(ptr);
-        return DTERROR(ENOMEM);
+    if ( !val ) {
+        dt_freep( ptr );
+        return DTERROR( ENOMEM );
     }
 
-    memcpy(ptr, &val, sizeof(val));
+    memcpy( ptr, &val, sizeof( val ) );
     return 0;
 }
 
-void *dt_realloc_array(void *ptr, size_t nmemb, size_t size)
-{
-    if (!size || nmemb >= INT_MAX / size) {
+void *dt_realloc_array( void *ptr, size_t nmemb, size_t size ) {
+    if ( !size || nmemb >= INT_MAX / size ) {
         return NULL;
     }
-    return dt_realloc(ptr, nmemb * size);
+    return dt_realloc( ptr, nmemb * size );
 }
 
-int dt_reallocp_array(void *ptr, size_t nmemb, size_t size)
-{
+int dt_reallocp_array( void *ptr, size_t nmemb, size_t size ) {
     void *val;
 
-    memcpy(&val, ptr, sizeof(val));
-    val = dt_realloc_f(val, nmemb, size);
-    memcpy(ptr, &val, sizeof(val));
-    if (!val && nmemb && size) {
-        return DTERROR(ENOMEM);
+    memcpy( &val, ptr, sizeof( val ) );
+    val = dt_realloc_f( val, nmemb, size );
+    memcpy( ptr, &val, sizeof( val ) );
+    if ( !val && nmemb && size ) {
+        return DTERROR( ENOMEM );
     }
 
     return 0;
 }
 
-void dt_free(void *ptr)
-{
+void dt_free( void *ptr ) {
 #if CONFIG_MEMALIGN_HACK
-    if (ptr) {
-        int v = ((char *)ptr)[-1];
-        dt_assert0(v > 0 && v <= ALIGN);
-        free((char *)ptr - v);
+    if ( ptr ) {
+        int v = ( ( char * )ptr )[-1];
+        dt_assert0( v > 0 && v <= ALIGN );
+        free( ( char * )ptr - v );
     }
 #elif HAVE_ALIGNED_MALLOC
-    _aligned_free(ptr);
+    _aligned_free( ptr );
 #else
-    free(ptr);
+    free( ptr );
 #endif
 }
 
-void dt_freep(void *arg)
-{
+void dt_freep( void *arg ) {
     void *val;
 
-    memcpy(&val, arg, sizeof(val));
-    memcpy(arg, &(void *) {
+    memcpy( &val, arg, sizeof( val ) );
+    memcpy( arg, &( void * ) {
         NULL
-    }, sizeof(val));
-    dt_free(val);
+    }, sizeof( val ) );
+    dt_free( val );
 }
 
-void *dt_mallocz(size_t size)
-{
-    void *ptr = dt_malloc(size);
-    if (ptr) {
-        memset(ptr, 0, size);
+void *dt_mallocz( size_t size ) {
+    void *ptr = dt_malloc( size );
+    if ( ptr ) {
+        memset( ptr, 0, size );
     }
     return ptr;
 }
 
-void *dt_calloc(size_t nmemb, size_t size)
-{
-    if (size <= 0 || nmemb >= INT_MAX / size) {
+void *dt_calloc( size_t nmemb, size_t size ) {
+    if ( size <= 0 || nmemb >= INT_MAX / size ) {
         return NULL;
     }
-    return dt_mallocz(nmemb * size);
+    return dt_mallocz( nmemb * size );
 }
 
-char *dt_strdup(const char *s)
-{
+char *dt_strdup( const char *s ) {
     char *ptr = NULL;
-    if (s) {
-        size_t len = strlen(s) + 1;
-        ptr = dt_realloc(NULL, len);
-        if (ptr) {
-            memcpy(ptr, s, len);
+    if ( s ) {
+        size_t len = strlen( s ) + 1;
+        ptr = dt_realloc( NULL, len );
+        if ( ptr ) {
+            memcpy( ptr, s, len );
         }
     }
     return ptr;
 }
 
-char *dt_strndup(const char *s, size_t len)
-{
+char *dt_strndup( const char *s, size_t len ) {
     char *ret = NULL, *end;
 
-    if (!s) {
+    if ( !s ) {
         return NULL;
     }
 
-    end = memchr(s, 0, len);
-    if (end) {
+    end = memchr( s, 0, len );
+    if ( end ) {
         len = end - s;
     }
 
-    ret = dt_realloc(NULL, len + 1);
-    if (!ret) {
+    ret = dt_realloc( NULL, len + 1 );
+    if ( !ret ) {
         return NULL;
     }
 
-    memcpy(ret, s, len);
+    memcpy( ret, s, len );
     ret[len] = 0;
     return ret;
 }
 
-void *dt_memdup(const void *p, size_t size)
-{
+void *dt_memdup( const void *p, size_t size ) {
     void *ptr = NULL;
-    if (p) {
-        ptr = dt_malloc(size);
-        if (ptr) {
-            memcpy(ptr, p, size);
+    if ( p ) {
+        ptr = dt_malloc( size );
+        if ( ptr ) {
+            memcpy( ptr, p, size );
         }
     }
     return ptr;
