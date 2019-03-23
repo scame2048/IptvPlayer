@@ -1,0 +1,15 @@
+"name": "湖南联通 001 号源",
+"version": 1,
+"list": [
+    {
+        "category": "杂项 1",
+        "list": [
+            {
+                "channel": "清华大学电视台",
+                "definition": 0,
+                "enable": 1,
+                "address": "http://v.cic.tsinghua.edu.cn:8080/live/tsinghuatv.flv"
+            }
+        ]
+    }
+]

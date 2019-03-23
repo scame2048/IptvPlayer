@@ -39,9 +39,10 @@ public class MainActivity extends Activity {
         // LivePlayerManager.get().createMedia();
         AddressManager.get().setLoader(mLoader);
 
-        // mMediaPlayer = new MediaPlayer(this, false);
+        /// mMediaPlayer = new MediaPlayer(this, false);
         DtMediaPlay dtPlayer = new DtMediaPlay(this);
         mMediaPlayer = new MediaPlayerProxy(dtPlayer);
+        // mMediaPlayer = new MediaPlayerProxy();
         mMediaPlayer.setPlayCallBack(mPlayCallBack);
     }
 
@@ -203,10 +204,44 @@ public class MainActivity extends Activity {
 
             //startMediaPlayer("http://dlhls.cdn.zhanqi.tv/zqlive/96851_ZeePd.m3u8");
             // startMediaPlayer("http://dlhls.cdn.zhanqi.tv/zqlive/123407_XhQs9_1024/index.m3u8");
-            startMediaPlayer("http://dlhls.cdn.zhanqi.tv/zqlive/123407_XhQs9_1024/index.m3u8");
-            // startMediaPlayer("rtsp://113.136.42.39:554/PLTV/88888888/224/3221226033/10000100000000060000000001580493_0.smil");
+            // startMediaPlayer("http://dlhls.cdn.zhanqi.tv/zqlive/123407_XhQs9_1024/index.m3u8");
+            startMediaPlayer("rtsp://113.136.42.39:554/PLTV/88888888/224/3221226033/10000100000000060000000001580493_0.smil");
 
-            // startMediaPlayer("rtsp://119.39.49.116:554/ch00000090990000001192.sdp?vcdnid=001");
+            // 峨嵋电影
+            /// startMediaPlayer("http://scgctvshow.sctv.com/hdlive/emei/3.m3u8");
+
+            // 虎牙电影 1
+            // startMediaPlayer("http://aldirect.hls.huya.com/huyalive/30765679-2504742278-10757786168918540288-3049003128-10057-A-0-1_1200.m3u8");
+
+            // 澳门莲花
+            // startMediaPlayer("rtmp://live-rtmp.lotustv.duolaibo.cn/lotustv/5562e9e4d409d24c9600075c");
+
+            // 环球电视台
+            // startMediaPlayer("http://live-cdn.xzxwhcb.com/hls/sn88wrar.m3u8");
+
+            // 星卫电视台
+            // startMediaPlayer("http://59.120.242.104:9000/live/live10.m3u8");
+
+            // 龙华经典
+            // startMediaPlayer("http://61.216.177.73/sta/ch10119014.m3u8");
+
+            // 纪实频道
+            // startMediaPlayer("rtmp://58.200.131.2:1935/livetv/docuchina");
+
+            // cmc usa
+            // startMediaPlayer("http://cmctv.ios.internapcdn.net/cmctv_vitalstream_com/live_1/CMCUSA/CCURstream0.m3u8");
+
+            // 东北银
+            // startMediaPlayer("https://new.jsyunbf.com/20180331/Ykup4R2v/index.m3u8 ");
+
+            // 动作电影
+            // startMediaPlayer("http://117.187.29.38:6060/000000001000/8103864434730665389/1.m3u8?");
+
+            // CCTV6
+            // startMediaPlayer("http://ivi.bupt.edu.cn/hls/cctv6.m3u8");
+
+            // 也许是  流浪地球
+            // startMediaPlayer("https://zk.wb699.com/2019/02/07/ar7U7LW69WOfokCb/playlist.m3u8");
         }
 
         @Override
