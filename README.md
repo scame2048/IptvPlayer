@@ -46,3 +46,72 @@ QQ
 ```
 http://dlhls.cdn.zhanqi.tv/zqlive/49427_jmACJ.m3u8
 ```
+
+### 2. 几个体育高清台
+```
+1> CCTV-5 高清:  http://tvsharing.000webhostapp.com/wxyxyb.php?id=4200000021
+2> CCTV-5+ 高清: http://tvsharing.000webhostapp.com/wxyxyb.php?id=4200000022
+3> 北京体育: http://cctvtxyh5c.liveplay.myqcloud.com/wstv/btv6_2/index.m3u8
+4> 五星体育: http://huaweicdn.hb.chinamobile.com/PLTV/88888888/224/3221225964/1.m3u8
+5> 劲爆体育: http://live.xocs.ren/hbgd.php?id=078
+6> 篮球: http://live.xocs.ren/hbgd.php?id=079
+```
+
+### 3. 动画片台
+```
+http://117.187.29.38:6060/000000001000/6497762188035533951/1.m3u8?
+
+
+```
+
+
+### misc
+```
+from address:
+http://www.hdpfans.com/forum.php?mod=viewthread&tid=820730&page=1&authorid=2575888
+
+随便电影: 
+http://aldirect.hls.huya.com/huyalive/28466698-2689659358-11551998979990355968-2789274580-10057-A-0-1_1200.m3u8
+
+高清直播:
+http://dlhls.cdn.zhanqi.tv/zqlive/35349_iXsXw.m3u8
+
+战旗-周口影视频道:
+http://dlhls.cdn.zhanqi.tv/zqlive/80918_cr4oy.m3u8
+
+战旗影院8 :
+http://dlhls.cdn.zhanqi.tv/zqlive/35349_iXsXw.m3u8
+
+战旗影院10 :
+http://dlhls.cdn.zhanqi.tv/zqlive/53346_ESoth.m3u8
+
+战旗影院12:
+http://dlhls.cdn.zhanqi.tv/zqlive/35180_KUDhx.m3u8
+
+战旗影院14:
+http://dlhls.cdn.zhanqi.tv/zqlive/96851_ZeePd.m3u8
+
+战旗影院17:
+http://dlhls.cdn.zhanqi.tv/zqlive/102444_ZGmRp.m3u8
+
+日-历史频道:
+http://192.240.127.34:1935/live/cs14.stream/media_1254.m3u8
+http://192.240.127.34:1935/live/cs14.stream/playlist.m3u8
+
+ニキータ,
+https://mp4.238yy.com/javbox-mp4/kin8-1809.mp4
+白石真琴,
+https://mp4.238yy.com/javbox-mp4/111717-540-carib.mp4
+华城まや,
+https://mp4.238yy.com/javbox-mp4/heyzo_1487.mp4
+三冢梨乃,
+https://mp4.238yy.com/javbox-mp4/H0930-ori1479.mp4
+石垣和叶,
+https://mp4.238yy.com/javbox-mp4/H4610-ori1635.mp4
+生岛凉,
+https://mp4.238yy.com/javbox-mp4/heyzo_1594.mp4
+野々村あいり,
+https://mp4.238yy.com/javbox-mp4/111817_01-10mu.mp4
+牧野えり,
+https://mp4.238yy.com/javbox-mp4/111817_175-paco.mp4
+```
