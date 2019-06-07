@@ -34,6 +34,7 @@
 + 11  http://www.hdpfans.com/thread-821369-1-1.html
 + 12  http://www.hdpfans.com/thread-822263-1-1.html
 + 13  http://www.hdpfans.com/thread-819855-1-6.html
++ 14  http://laoroc.com/?p=313
 
 # http://www.hdpfans.com 登录
 ```
@@ -60,8 +61,33 @@ http://dlhls.cdn.zhanqi.tv/zqlive/49427_jmACJ.m3u8
 ### 3. 动画片台
 ```
 http://117.187.29.38:6060/000000001000/6497762188035533951/1.m3u8?
+```
 
+### 4. 老友记
+```
+http://aldirect.hls.huya.com/huyalive/29169025-2686220018-11537227127170531328-2847699120-10057-A-1524041208-1_1200.m3u8
+```
 
+### 5. 漫威电影
+```
+http://aldirect.hls.huya.com/huyalive/30765679-2504742278-10757786168918540288-3049003128-10057-A-0-1_1200.m3u8
+```
+
+### 6. 康熙大帝  雍正王朝
+```
+https://txdirect.hls.huya.com/huyalive/29359996-2689277426-11550358594541060096-2847699098-10057-A-0-1_1200.m3u8
+```
+
+### 7. 周星驰
+```
+https://tx.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-2789274524-10057-A-0-1_1200.m3u8
+```
+
+### 8. CBN
+```
+http://42.48.60.248:8082/live/gqts-800k.m3u8
+
+http://42.48.60.248:8082/live/gqys-800k.m3u8
 ```
 
 
