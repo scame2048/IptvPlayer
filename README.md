@@ -35,6 +35,9 @@
 + 12  http://www.hdpfans.com/thread-822263-1-1.html
 + 13  http://www.hdpfans.com/thread-819855-1-6.html
 + 14  http://laoroc.com/?p=313
++ 15  https://laoguy.com/zby20190317.html
++ 16  http://xhl085.applinzi.com/MTV.php?id=
++ 17  https://gist.github.com/the-sword/c77cdda82bdd02b53faf30e6b6c61002
 
 # http://www.hdpfans.com 登录
 ```
@@ -88,6 +91,21 @@ https://tx.hls.huya.com/huyalive/94525224-2460685313-10568562945082523648-278927
 http://42.48.60.248:8082/live/gqts-800k.m3u8
 
 http://42.48.60.248:8082/live/gqys-800k.m3u8
+```
+
+### 9. IVI
+```
+http://ivi.bupt.edu.cn/hls/chchd.m3u8
+http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8
+http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8
+```
+
+### 10. NEWTV
+```
+http://111.40.205.87/PLTV/88888888/224/3221225665/index.m3u8
+http://111.40.205.87/PLTV/88888888/224/3221225663/index.m3u8
+http://183.207.249.15/PLTV/3/224/3221225529/index.m3u8
+
 ```
 
 
