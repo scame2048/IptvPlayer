@@ -320,4 +320,10 @@ https://mp4.238yy.com/javbox-mp4/heyzo_1594.mp4
 https://mp4.238yy.com/javbox-mp4/111817_01-10mu.mp4
 牧野えり,
 https://mp4.238yy.com/javbox-mp4/111817_175-paco.mp4
+
+河北-影视 http://weblive.hebtv.com/live/hbys_bq/index.m3u8
+播放地址： https://guihet.com/tvlive-huabei.html
+
+
 ```
+
